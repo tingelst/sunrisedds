@@ -1,0 +1,11 @@
+#include "Header.idl"
+#include "JointQuantity.idl"
+
+module sunrisedds_interfaces {
+  module msg {
+    struct JointPosition {
+      std_msgs::msg::Header header;
+      sunrisedds_interfaces::msg::JointQuantity position;
+    };
+  };
+};

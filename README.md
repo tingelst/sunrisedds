@@ -42,10 +42,26 @@ CycloneDDS on KUKA Sunrise.OS for integration with ROS2
 
 9. Install the solution (INSTALL). The default install directory is `C:\Program Files\CycloneDDS`.
 
+### Install Sunrise Workbench
+
+Install Sunrise Workbench in the Windows 7 virtual machine. The installer comes with the installation medium from KUKA.
+
+### Configure environment variables
+
+1. Define the `JAVA_HOME` environment variable to the Sunrise Workbench jdk folder. Default location: `C:\Program Files\KUKA\Sunrise Workbench\jdk`.
+
+2. Append `%JAVA_HOME%\bin` to the `Path` environment variable.
 
 
+### Build Sunrise DDS jar and jni library
 
+1. Configure, generate, and build the SunriseDDS library to produce `sunrisedds.jar` and `sunrisedds_jni.dll`. 
 
+2. Add `sunrisedds.jar` to the build path in Sunrise Workbench.
+
+3. Copy `sunrisedds_jni.dll` to the Sunrise Controller at `C:\KRC\Shared`. This folder is by default in the `Path` environment variable on the controller.
+
+4. Copy Cyclone DDS to the robot controller.
 
 
 
