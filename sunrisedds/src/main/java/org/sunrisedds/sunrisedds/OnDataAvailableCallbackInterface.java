@@ -1,5 +1,5 @@
 package org.sunrisedds.sunrisedds;
 
 public interface OnDataAvailableCallbackInterface {
-    void callback();
+    void callback(float a1);
 }

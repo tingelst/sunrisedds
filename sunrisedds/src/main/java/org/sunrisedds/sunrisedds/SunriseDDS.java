@@ -37,11 +37,15 @@ public class SunriseDDS {
         int subscriberHandle = nativeCreateSubscriber(participantHandle);
         logger.info("{}", subscriberHandle);
 
+        OnJointPositionDataAvailableCallback callback = new OnJointPositionDataAvailableCallback();
+
         int readerHandle = nativeCreateJointPositionReader(participantHandle, subscriberHandle, "rt/joint_position",
-                new OnJointPositionDataAvailableCallback());
+                callback);
         logger.info("reader: {}", readerHandle);
 
-        nativeJointPositionReaderRead(readerHandle);
+        while (true) {
+
+        }
 
     }
 }
