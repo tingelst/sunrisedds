@@ -15,13 +15,14 @@ target_link_libraries(${PROJECT_NAME}_interfaces
     CycloneDDS::ddsc)
 
 add_library(${PROJECT_NAME} SHARED
-    "src/main/cpp/${PROJECT_NAME}.cpp")
+    "src/main/cpp/org_sunrisedds_sunrisedds_SunriseDDS.cpp")
 target_include_directories(${PROJECT_NAME} PRIVATE ${JNI_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} 
     ${PROJECT_NAME}_interfaces 
     CycloneDDS::ddsc)
 
-add_jar(${PROJECT_NAME}_jar 
-    "src/main/java/org/sunrisedds/sunrisedds/SunriseDDS.java"
-    OUTPUT_NAME
-    ${PROJECT_NAME})
+
+# add_jar(${PROJECT_NAME}_jar 
+#     "src/main/java/org/sunrisedds/sunrisedds/SunriseDDS.java"
+#     OUTPUT_NAME
+#     ${PROJECT_NAME})

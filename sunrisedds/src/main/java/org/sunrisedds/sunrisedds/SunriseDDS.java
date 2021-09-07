@@ -1,13 +1,47 @@
 package org.sunrisedds.sunrisedds;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SunriseDDS {
+
+    private static final Logger logger = LoggerFactory.getLogger(SunriseDDS.class);
+
+    static {
+        try {
+            String libraryName = "sunrisedds";
+            logger.info("Loading native code library: " + libraryName);
+            System.loadLibrary(libraryName);
+        } catch (UnsatisfiedLinkError ule) {
+            logger.error("Native code library failed to load.\n" + ule);
+            System.exit(1);
+        }
+    }
 
     private SunriseDDS() {
     }
 
     public static native int nativeCreateDomainParticipant();
 
+    public static native int nativeCreateSubscriber(int participantHandle);
+
+    public static native int nativeCreateJointPositionReader(int participantHandle, int subscriberHandle, String topic,
+            OnDataAvailableCallbackInterface callback);
+
+    public static native void nativeJointPositionReaderRead(int readerHandle);
+
     public static void main(String[] args) {
-        System.out.println("SunriseDDS");
+        int participantHandle = nativeCreateDomainParticipant();
+        logger.info("{}", participantHandle);
+
+        int subscriberHandle = nativeCreateSubscriber(participantHandle);
+        logger.info("{}", subscriberHandle);
+
+        int readerHandle = nativeCreateJointPositionReader(participantHandle, subscriberHandle, "rt/joint_position",
+                new OnJointPositionDataAvailableCallback());
+        logger.info("reader: {}", readerHandle);
+
+        nativeJointPositionReaderRead(readerHandle);
+
     }
 }
