@@ -23,6 +23,9 @@ JNIEXPORT jint JNICALL Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateDom
 JNIEXPORT jint JNICALL Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateSubscriber
   (JNIEnv *, jclass, jint);
 
+JNIEXPORT jint JNICALL Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreatePublisher
+  (JNIEnv *, jclass, jint);
+
 /*
  * Class:     org_sunrisedds_sunrisedds_SunriseDDS
  * Method:    nativeCreateJointPositionReader

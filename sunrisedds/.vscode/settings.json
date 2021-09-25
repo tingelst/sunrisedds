@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/lars/Downloads/slf4j-api-1.7.21.jar",
+        "/home/lars/Downloads/slf4j-simple-1.7.21.jar",
+        "/home/lars/Downloads/commons-lang3-3.7.jar"
+    ]
+}

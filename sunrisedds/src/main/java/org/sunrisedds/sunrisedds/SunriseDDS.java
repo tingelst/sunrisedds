@@ -21,9 +21,16 @@ public class SunriseDDS {
     private SunriseDDS() {
     }
 
+    public static DomainParticipant createDomainParticipant() {
+        int handle = nativeCreateDomainParticipant();
+        return new DomainParticipant(handle);
+    }
+
     public static native int nativeCreateDomainParticipant();
 
     public static native int nativeCreateSubscriber(int participantHandle);
+
+    public static native int nativeCreatePublisher(int participantHandle);
 
     public static native int nativeCreateJointPositionReader(int participantHandle, int subscriberHandle, String topic,
             OnDataAvailableCallbackInterface callback);
