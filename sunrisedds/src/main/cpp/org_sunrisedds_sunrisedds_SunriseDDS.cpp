@@ -6,20 +6,20 @@
 
 #define MAX_SAMPLES 1
 
-JavaVM *g_vm = nullptr;
+JavaVM * g_vm = nullptr;
 jobject g_on_joint_position_data_available_callback;
 
 JNIEXPORT jint JNICALL
-Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateDomainParticipant(
-    JNIEnv *, jclass) {
-  dds_entity_t participant =
-      dds_create_participant(DDS_DOMAIN_DEFAULT, NULL, NULL);
+Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateDomainParticipant(JNIEnv *, jclass)
+{
+  dds_entity_t participant = dds_create_participant(DDS_DOMAIN_DEFAULT, NULL, NULL);
   return static_cast<jint>(participant);
 }
 
 JNIEXPORT jint JNICALL
 Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateSubscriber(
-    JNIEnv *, jclass, jint jparticipant) {
+  JNIEnv *, jclass, jint jparticipant)
+{
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t subscriber = dds_create_subscriber(participant, NULL, NULL);
   jint jsubscriber = static_cast<jint>(subscriber);
@@ -27,38 +27,37 @@ Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateSubscriber(
 }
 
 JNIEXPORT jint JNICALL
-Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreatePublisher(
-    JNIEnv *, jclass, jint jparticipant) {
+Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreatePublisher(JNIEnv *, jclass, jint jparticipant)
+{
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t subscriber = dds_create_publisher(participant, NULL, NULL);
   jint jsubscriber = static_cast<jint>(subscriber);
   return jsubscriber;
 }
 
-static void data_available_handler(dds_entity_t reader, void *arg) {
-  JNIEnv *env;
+static void
+data_available_handler(dds_entity_t reader, void * arg)
+{
+  JNIEnv * env;
   assert(g_vm != nullptr);
   g_vm->AttachCurrentThread((void **)&env, NULL);
 
-  sunrisedds_interfaces_msg_JointPosition *msg;
-  void *samples[MAX_SAMPLES];
+  sunrisedds_interfaces_msg_JointPosition * msg;
+  void * samples[MAX_SAMPLES];
   dds_sample_info_t infos[MAX_SAMPLES];
   dds_return_t rc;
 
   samples[0] = sunrisedds_interfaces_msg_JointPosition__alloc();
 
-  int samples_received =
-      dds_take(reader, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
+  int samples_received = dds_take(reader, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
 
   if (infos[0].valid_data) {
-    msg =
-        reinterpret_cast<sunrisedds_interfaces_msg_JointPosition *>(samples[0]);
+    msg = reinterpret_cast<sunrisedds_interfaces_msg_JointPosition *>(samples[0]);
 
-    jclass callback_cls =
-        env->GetObjectClass(g_on_joint_position_data_available_callback);
+    jclass callback_cls = env->GetObjectClass(g_on_joint_position_data_available_callback);
     jmethodID callback_mid = env->GetMethodID(callback_cls, "callback", "(F)V");
-    env->CallVoidMethod(g_on_joint_position_data_available_callback,
-                        callback_mid, msg->position.a1);
+    env->CallVoidMethod(
+      g_on_joint_position_data_available_callback, callback_mid, msg->position.a1);
   }
 
   sunrisedds_interfaces_msg_JointPosition_free(samples[0], DDS_FREE_ALL);
@@ -68,26 +67,25 @@ static void data_available_handler(dds_entity_t reader, void *arg) {
 
 JNIEXPORT jint JNICALL
 Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateJointPositionReader(
-    JNIEnv *env, jclass, jint jparticipant, jint jsubscriber,
-    jstring jtopic_name, jobject callback) {
+  JNIEnv * env, jclass, jint jparticipant, jint jsubscriber, jstring jtopic_name, jobject callback)
+{
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t subscriber = static_cast<dds_entity_t>(jsubscriber);
 
   // Create topic
-  const char *topic_name = env->GetStringUTFChars(jtopic_name, NULL);
+  const char * topic_name = env->GetStringUTFChars(jtopic_name, NULL);
   dds_entity_t topic = dds_create_topic(
-      participant, &sunrisedds_interfaces_msg_JointPosition_desc, topic_name,
-      NULL, NULL);
+    participant, &sunrisedds_interfaces_msg_JointPosition_desc, topic_name, NULL, NULL);
   env->ReleaseStringUTFChars(jtopic_name, topic_name);
 
-  g_on_joint_position_data_available_callback = env->NewGlobalRef(
-      callback);  // TODO(tingelst): Maybe as a register callback method?
+  g_on_joint_position_data_available_callback =
+    env->NewGlobalRef(callback);  // TODO(tingelst): Maybe as a register callback method?
 
-  dds_listener_t *listener = dds_create_listener(NULL);
+  dds_listener_t * listener = dds_create_listener(NULL);
   dds_lset_data_available(listener, data_available_handler);
 
   // Create a reliable reader
-  dds_qos_t *qos = dds_create_qos();
+  dds_qos_t * qos = dds_create_qos();
   dds_qset_reliability(qos, DDS_RELIABILITY_RELIABLE, DDS_SECS(10));
   dds_entity_t reader = dds_create_reader(subscriber, topic, qos, listener);
 
@@ -104,9 +102,10 @@ Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeCreateJointPositionReader(
 
 JNIEXPORT void JNICALL
 Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeJointPositionReaderRead(
-    JNIEnv *, jclass, jint jreader) {
-  sunrisedds_interfaces_msg_JointPosition *msg;
-  void *samples[MAX_SAMPLES];
+  JNIEnv *, jclass, jint jreader)
+{
+  sunrisedds_interfaces_msg_JointPosition * msg;
+  void * samples[MAX_SAMPLES];
   dds_sample_info_t infos[MAX_SAMPLES];
   dds_return_t rc;
 
@@ -118,8 +117,7 @@ Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeJointPositionReaderRead(
     rc = dds_read(reader, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
 
     if ((rc > 0) && (infos[0].valid_data)) {
-      msg = reinterpret_cast<sunrisedds_interfaces_msg_JointPosition *>(
-          samples[0]);
+      msg = reinterpret_cast<sunrisedds_interfaces_msg_JointPosition *>(samples[0]);
 
       printf("Received message\n");
       break;
@@ -131,28 +129,30 @@ Java_org_sunrisedds_sunrisedds_SunriseDDS_nativeJointPositionReaderRead(
   sunrisedds_interfaces_msg_JointPosition_free(samples[0], DDS_FREE_ALL);
 }
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *) {
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM * vm, void *)
+{
   // Can only call this once
   if (g_vm == nullptr) {
     g_vm = vm;
   }
 
-  JNIEnv *env;
-  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) !=
-      JNI_OK) {
+  JNIEnv * env;
+  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
     return JNI_ERR;
   }
 
   return JNI_VERSION_1_6;
 }
 
-JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *) {
+JNIEXPORT void JNICALL
+JNI_OnUnload(JavaVM * vm, void *)
+{
   assert(g_vm != nullptr);
   assert(g_vm == vm);
 
-  JNIEnv *env;
-  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) ==
-      JNI_OK) {
+  JNIEnv * env;
+  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) == JNI_OK) {
     env->DeleteGlobalRef(g_on_joint_position_data_available_callback);
   }
 }

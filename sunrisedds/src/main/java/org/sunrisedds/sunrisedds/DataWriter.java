@@ -16,8 +16,8 @@ public class DataWriter<T extends MessageDefinition> extends Entity {
         this.topic = topic;
     }
 
-    public final void write(final T message) {
-        SunriseDDS.nativeWrite(this.entityId, message);
-    }
+    // public final void write(final T message) {
+    //     SunriseDDS.nativeWrite(this.entityId, message);
+    // }
 
 }
