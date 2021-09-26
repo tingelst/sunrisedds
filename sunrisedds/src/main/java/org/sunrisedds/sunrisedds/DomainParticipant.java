@@ -25,6 +25,14 @@ public class DomainParticipant {
     this.handle = nativeCreateDomainParticipant();
   }
 
+  public Publisher createPublisher() {
+    return new Publisher(this);
+  }
+
+  public int getHandle() {
+    return this.handle;
+  }
+
   private static native int nativeCreateDomainParticipant();
 
 }
