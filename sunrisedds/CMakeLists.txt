@@ -99,6 +99,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/org/sunrisedds/sunrisedds/Entity.java"
   "src/main/java/org/sunrisedds/sunrisedds/DomainParticipant.java"
   "src/main/java/org/sunrisedds/sunrisedds/interfaces/MessageDefinition.java"
+  "src/main/java/org/sunrisedds/sunrisedds/utils/JNIUtils.java"
 )
 
 add_jar("${PROJECT_NAME}_jar"

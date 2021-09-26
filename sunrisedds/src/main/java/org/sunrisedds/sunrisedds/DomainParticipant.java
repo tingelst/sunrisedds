@@ -8,20 +8,23 @@ import org.sunrisedds.sunrisedds.utils.JNIUtils;
 
 public class DomainParticipant {
 
-    private static final Logger logger = LoggerFactory.getLogger(DomainParticipant.class);
+  private static final Logger logger = LoggerFactory.getLogger(DomainParticipant.class);
 
   static {
     try {
-      JNIUtils.loadImplementation(NodeImpl.class);
+      JNIUtils.loadImplementation(DomainParticipant.class);
     } catch (UnsatisfiedLinkError ule) {
       logger.error("Native code library failed to load.\n" + ule);
       System.exit(1);
     }
   }
 
+  private int handle;
 
-    private static native int nativeCreateDomainParticipant();
+  public DomainParticipant() {
+    this.handle = nativeCreateDomainParticipant();
+  }
 
-
+  private static native int nativeCreateDomainParticipant();
 
 }
