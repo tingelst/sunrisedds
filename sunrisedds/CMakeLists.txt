@@ -94,6 +94,8 @@ set(${PROJECT_NAME}_sources
   "src/main/java/org/sunrisedds/sunrisedds/Entity.java"
   "src/main/java/org/sunrisedds/sunrisedds/DomainParticipant.java"
   "src/main/java/org/sunrisedds/sunrisedds/Publisher.java"
+  "src/main/java/org/sunrisedds/sunrisedds/Topic.java"
+  "src/main/java/org/sunrisedds/sunrisedds/DataWriter.java"
   "src/main/java/org/sunrisedds/sunrisedds/interfaces/MessageDefinition.java"
   "src/main/java/org/sunrisedds/sunrisedds/utils/JNIUtils.java"
 )
