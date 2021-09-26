@@ -89,11 +89,6 @@ else()
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/slf4j-jdk14-${slf4j_version}.jar")
 endif()
 
-find_jar(COMMONS_LANG3_JAR NAMES commons-lang3)
-find_jar(SFL4J_JAR NAMES slf4j-api)
-
-message(INFO ${SFL4J_JAR})
-
 set(${PROJECT_NAME}_sources
   "src/main/java/org/sunrisedds/sunrisedds/Simple.java"
   "src/main/java/org/sunrisedds/sunrisedds/Entity.java"
