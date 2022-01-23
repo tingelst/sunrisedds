@@ -4,7 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.sunrisedds.sunrisedds.interfaces.MessageDefinition;
-import org.sunrisedds.sunrisedds.utils.JNIUtils;
+
+import no.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class DomainParticipant {
 

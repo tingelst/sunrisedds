@@ -5,13 +5,13 @@
 package std_msgs.msg;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.sunrisedds.sunrisedds.utils.JNIUtils;
 import org.sunrisedds.sunrisedds.interfaces.MessageDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // Member 'stamp'
 import builtin_interfaces.msg.Time;
+import no.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class Header implements MessageDefinition {
 

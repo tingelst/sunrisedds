@@ -90,14 +90,9 @@ else()
 endif()
 
 set(${PROJECT_NAME}_sources
-  "src/main/java/org/sunrisedds/sunrisedds/Simple.java"
-  "src/main/java/org/sunrisedds/sunrisedds/Entity.java"
-  "src/main/java/org/sunrisedds/sunrisedds/DomainParticipant.java"
-  "src/main/java/org/sunrisedds/sunrisedds/Publisher.java"
-  "src/main/java/org/sunrisedds/sunrisedds/Topic.java"
-  "src/main/java/org/sunrisedds/sunrisedds/DataWriter.java"
-  "src/main/java/org/sunrisedds/sunrisedds/interfaces/MessageDefinition.java"
-  "src/main/java/org/sunrisedds/sunrisedds/utils/JNIUtils.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/SunriseDDS.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DomainParticipant.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
 
 add_jar("${PROJECT_NAME}_jar"
@@ -113,8 +108,7 @@ add_jar("${PROJECT_NAME}_jar"
 )
 
 set(${PROJECT_NAME}_jni_sources
-  "src/main/cpp/org_sunrisedds_sunrisedds_DomainParticipant.cpp"
-  "src/main/cpp/org_sunrisedds_sunrisedds_Publisher.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
 )
 
 foreach(_jni_source ${${PROJECT_NAME}_jni_sources})

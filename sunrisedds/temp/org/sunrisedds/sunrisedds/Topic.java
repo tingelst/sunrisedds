@@ -1,7 +1,8 @@
 package org.sunrisedds.sunrisedds;
 
 import org.sunrisedds.sunrisedds.interfaces.MessageDefinition;
-import org.sunrisedds.sunrisedds.utils.JNIUtils;
+
+import no.mtp.ra.sunrisedds.utils.JNIUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

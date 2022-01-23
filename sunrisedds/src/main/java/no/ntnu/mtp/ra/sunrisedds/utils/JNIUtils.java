@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-package org.sunrisedds.sunrisedds.utils;
+package no.ntnu.mtp.ra.sunrisedds.utils;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
