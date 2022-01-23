@@ -18,7 +18,6 @@ public class SunriseDDS {
         }
     }
 
-
     public static DomainParticipant createDomainParticipant() {
         int handle = nativeCreateDomainParticipant();
         return new DomainParticipant(handle);
