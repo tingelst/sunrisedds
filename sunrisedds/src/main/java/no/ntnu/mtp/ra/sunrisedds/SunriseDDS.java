@@ -1,8 +1,11 @@
 package no.ntnu.mtp.ra.sunrisedds;
 
+import java.net.ProtocolException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class SunriseDDS {
@@ -24,5 +27,12 @@ public class SunriseDDS {
     }
 
     protected static native int nativeCreateDomainParticipant();
+
+    protected static native int nativeCreatePublisher(int domainParticipantHandle);
+
+    protected static native int nativeCreateSubscriber(int domainParticipantHandle);
+
+    protected static native <T extends MessageDefinition> int nativeCreateTopicHandle(int domainParticipantHandle,
+            Class<T> messageType, String topicName);
 
 }

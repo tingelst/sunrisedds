@@ -15,6 +15,30 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipant
   (JNIEnv *, jclass);
 
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreatePublisher
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreatePublisher
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateSubscriber
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateSubscriber
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateTopicHandle
+ * Signature: (ILjava/lang/Class;Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateTopicHandle
+  (JNIEnv *, jclass, jint, jclass, jstring);
+
 #ifdef __cplusplus
 }
 #endif

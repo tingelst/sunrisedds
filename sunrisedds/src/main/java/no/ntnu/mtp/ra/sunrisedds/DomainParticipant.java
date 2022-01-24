@@ -13,6 +13,19 @@ public class DomainParticipant {
         this.handle = handle;
     }
 
+    public Publisher createPublisher() {
+        int publisherHandle = SunriseDDS.nativeCreatePublisher(handle);
+        // TODO(Lars): Check ret code and throw exception
+        Publisher publisher = new Publisher(publisherHandle);
+        return publisher;
+    }
+
+    public Subscriber createSubscriber() {
+        int subscriberHandle = SunriseDDS.nativeCreateSubscriber(handle);
+        Subscriber subscriber = new Subscriber(subscriberHandle);
+        return subscriber;
+    }
+
     public final int getHandle() {
         return this.handle;
     }

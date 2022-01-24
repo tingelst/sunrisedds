@@ -92,6 +92,10 @@ endif()
 set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/SunriseDDS.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/DomainParticipant.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Publisher.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Subscriber.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
 

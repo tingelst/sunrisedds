@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sunrisedds.sunrisedds.interfaces;
+package no.ntnu.mtp.ra.sunrisedds.msg;
 
 public interface MessageDefinition {
 
