@@ -113,6 +113,7 @@ add_jar("${PROJECT_NAME}_jar"
 
 set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Time.cpp"
 )
 
 foreach(_jni_source ${${PROJECT_NAME}_jni_sources})

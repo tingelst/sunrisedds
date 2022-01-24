@@ -7,6 +7,8 @@ import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.Topic;
+import no.ntnu.mtp.ra.sunrisedds.msg.Time;
 
 public class Example {
 
@@ -19,6 +21,7 @@ public class Example {
 
         logger.info("Created subscriber with handle: " + String.valueOf(subscriber.getHandle()));
 
+        Topic<Time> topic = participant.createTopic(Time.class, "time");
     }
 
 }

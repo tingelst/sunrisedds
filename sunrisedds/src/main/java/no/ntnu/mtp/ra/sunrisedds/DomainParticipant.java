@@ -3,6 +3,8 @@ package no.ntnu.mtp.ra.sunrisedds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+
 public class DomainParticipant {
 
     private static final Logger logger = LoggerFactory.getLogger(DomainParticipant.class);
@@ -24,6 +26,12 @@ public class DomainParticipant {
         int subscriberHandle = SunriseDDS.nativeCreateSubscriber(handle);
         Subscriber subscriber = new Subscriber(subscriberHandle);
         return subscriber;
+    }
+
+    public <T extends MessageDefinition> Topic<T> createTopic(final Class<T> messageType, final String topicName) {
+        int topicHandle = SunriseDDS.nativeCreateTopicHandle(handle, messageType, topicName);
+        Topic<T> topic = new Topic<>(topicHandle, messageType, topicName);
+        return topic;
     }
 
     public final int getHandle() {

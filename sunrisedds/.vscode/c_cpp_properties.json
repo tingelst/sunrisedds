@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "src/main/cpp",
-                "/usr/lib/jvm/java-1.18.0-openjdk-amd64/include/"
+                "/usr/lib/jvm/java-1.18.0-openjdk-amd64/include/",
+                "/usr/lib/jvm/java-1.18.0-openjdk-amd64/include/linux"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
