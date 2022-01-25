@@ -16,14 +16,14 @@ public class DomainParticipant {
     }
 
     public Publisher createPublisher() {
-        int publisherHandle = SunriseDDS.nativeCreatePublisher(handle);
+        int publisherHandle = SunriseDDS.nativeCreatePublisherHandle(handle);
         // TODO(Lars): Check ret code and throw exception
         Publisher publisher = new Publisher(publisherHandle);
         return publisher;
     }
 
     public Subscriber createSubscriber() {
-        int subscriberHandle = SunriseDDS.nativeCreateSubscriber(handle);
+        int subscriberHandle = SunriseDDS.nativeCreateSubscriberHandle(handle);
         Subscriber subscriber = new Subscriber(subscriberHandle);
         return subscriber;
     }

@@ -1,0 +1,9 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "build/jars/commons-lang3-3.7.jar",
+        "build/jars/log4j-1.2.17.jar",
+        "build/jars/slf4j-api-1.7.21.jar",
+        "build/jars/slf4j-jdk14-1.7.21.jar"
+    ]
+}

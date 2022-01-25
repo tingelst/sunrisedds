@@ -9,26 +9,26 @@ extern "C" {
 #endif
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
- * Method:    nativeCreateDomainParticipant
+ * Method:    nativeCreateDomainParticipantHandle
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipant
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipantHandle
   (JNIEnv *, jclass);
 
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
- * Method:    nativeCreatePublisher
+ * Method:    nativeCreatePublisherHandle
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreatePublisher
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreatePublisherHandle
   (JNIEnv *, jclass, jint);
 
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
- * Method:    nativeCreateSubscriber
+ * Method:    nativeCreateSubscriberHandle
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateSubscriber
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateSubscriberHandle
   (JNIEnv *, jclass, jint);
 
 /*
@@ -38,6 +38,22 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateSub
  */
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateTopicHandle
   (JNIEnv *, jclass, jint, jclass, jstring);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateDataWriterHandle
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataWriterHandle
+  (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateDataReaderHandle
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle
+  (JNIEnv *, jclass, jint, jint);
 
 #ifdef __cplusplus
 }

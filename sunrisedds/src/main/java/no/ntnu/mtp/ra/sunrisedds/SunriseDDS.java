@@ -22,17 +22,21 @@ public class SunriseDDS {
     }
 
     public static DomainParticipant createDomainParticipant() {
-        int handle = nativeCreateDomainParticipant();
+        int handle = nativeCreateDomainParticipantHandle();
         return new DomainParticipant(handle);
     }
 
-    protected static native int nativeCreateDomainParticipant();
+    protected static native int nativeCreateDomainParticipantHandle();
 
-    protected static native int nativeCreatePublisher(int domainParticipantHandle);
+    protected static native int nativeCreatePublisherHandle(int domainParticipantHandle);
 
-    protected static native int nativeCreateSubscriber(int domainParticipantHandle);
+    protected static native int nativeCreateSubscriberHandle(int domainParticipantHandle);
 
     protected static native <T extends MessageDefinition> int nativeCreateTopicHandle(int domainParticipantHandle,
             Class<T> messageType, String topicName);
+
+    protected static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle);
+
+    protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle);
 
 }

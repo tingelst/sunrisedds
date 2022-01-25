@@ -3,6 +3,8 @@ package no.ntnu.mtp.ra.sunrisedds.examples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.DataReader;
+import no.ntnu.mtp.ra.sunrisedds.DataWriter;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
@@ -21,7 +23,17 @@ public class Example {
 
         logger.info("Created subscriber with handle: " + String.valueOf(subscriber.getHandle()));
 
-        Topic<Time> topic = participant.createTopic(Time.class, "time");
+        Topic<Time> read_topic = participant.createTopic(Time.class, "rt/read_time");
+        DataReader<Time> reader = subscriber.createDataReader(read_topic);
+
+        Topic<Time> write_topic = participant.createTopic(Time.class, "rt/write_time");
+        DataWriter<Time> writer = publisher.createDataWriter(write_topic);
+
+        while (true) {
+
+        }
+
+        
     }
 
 }

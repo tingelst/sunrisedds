@@ -94,8 +94,11 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/DomainParticipant.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Publisher.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Subscriber.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataWriter.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataReader.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
 
@@ -116,13 +119,17 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Time.cpp"
 )
 
+set("${PROJECT_NAME}_msg_sources"
+  "src/main/cpp/Time.c"
+)
+
 foreach(_jni_source ${${PROJECT_NAME}_jni_sources})
 
   get_filename_component(_target_name "${_jni_source}" NAME_WE)
   string_camel_case_to_lower_case_underscore("${_target_name}" _target_name)
 
   add_library(${_target_name}
-    SHARED ${_jni_source}
+    SHARED ${_jni_source} ${${PROJECT_NAME}_msg_sources}
   )
 
   set_target_properties(${_target_name} PROPERTIES
