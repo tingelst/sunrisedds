@@ -99,6 +99,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointQuantity.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
@@ -119,6 +120,7 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Time.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Header.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointQuantity.cpp"
 )
 
 set("${PROJECT_NAME}_msg_sources"
