@@ -31,7 +31,7 @@ public class Time implements MessageDefinition {
     }
 
     public int getNanosec() {
-        return sec;
+        return nanosec;
     }
 
     public Time setNanosec(int nanosec) {

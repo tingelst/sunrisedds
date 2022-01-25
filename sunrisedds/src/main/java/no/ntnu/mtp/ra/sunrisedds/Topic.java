@@ -13,7 +13,15 @@ public class Topic<T extends MessageDefinition> {
 
   private Class<T> messageType;
 
+  public final Class<T> getMessageType() {
+    return messageType;
+  }
+
   private String topicName;
+
+  public final String getTopicName() {
+    return topicName;
+  }
 
   public Topic(final int handle, final Class<T> messageType, final String topicName) {
     this.handle = handle;
@@ -24,6 +32,5 @@ public class Topic<T extends MessageDefinition> {
   public final int getHandle() {
     return this.handle;
   }
-
 
 }

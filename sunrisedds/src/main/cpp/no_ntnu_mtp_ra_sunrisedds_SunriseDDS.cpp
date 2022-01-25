@@ -87,6 +87,10 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
   return jreader;
 }
 
+using convert_from_java_signature = void * (*)(jobject, void *);
+using convert_to_java_signature = jobject (*)(void *, jobject);
+using destroy_message_signature = void (*)(void *);
+
 JNIEXPORT void JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite(
   JNIEnv * env, jclass cls, jint jwriter, jobject jmessage)
@@ -100,7 +104,6 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite(
   jmethodID mid = env->GetStaticMethodID(jmessage_class, "getFromJavaConverter", "()J");
   jlong jfrom_java_converter = env->CallStaticLongMethod(jmessage_class, mid);
 
-  using convert_from_java_signature = void * (*)(jobject, void *);
   convert_from_java_signature convert_from_java =
     reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
 
@@ -109,7 +112,55 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite(
   dds_write(writer, msg);
 }
 
+#define MAX_SAMPLES 1
+
 JNIEXPORT jobject JNICALL
-Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(JNIEnv *env, jclass cls, jint jreader)
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
+  JNIEnv * env, jclass cls, jint jreader, jclass jmessage_class)
 {
+  dds_entity_t reader = static_cast<dds_entity_t>(jreader);
+
+  jmethodID jfrom_mid = env->GetStaticMethodID(jmessage_class, "getFromJavaConverter", "()J");
+  jlong jfrom_java_converter = env->CallStaticLongMethod(jmessage_class, jfrom_mid);
+
+  convert_from_java_signature convert_from_java =
+    reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
+
+  jmethodID jconstructor = env->GetMethodID(jmessage_class, "<init>", "()V");
+  jobject jmsg = env->NewObject(jmessage_class, jconstructor);
+
+  void * taken_msg = convert_from_java(jmsg, nullptr);
+
+  void * samples[MAX_SAMPLES];
+  dds_sample_info_t infos[MAX_SAMPLES];
+  dds_return_t rc;
+
+  samples[0] = taken_msg;
+
+  while (true) {
+    rc = dds_read(reader, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
+    if ((rc > 0) && (infos[0].valid_data)) {
+      break;
+    } else {
+      dds_sleepfor(DDS_MSECS(20));
+    }
+  }
+
+  jmethodID jto_mid = env->GetStaticMethodID(jmessage_class, "getToJavaConverter", "()J");
+  jlong jto_java_converter = env->CallStaticLongMethod(jmessage_class, jto_mid);
+
+  convert_to_java_signature convert_to_java =
+    reinterpret_cast<convert_to_java_signature>(jto_java_converter);
+
+  jobject jtaken_msg = convert_to_java(taken_msg, nullptr);
+
+  jmethodID jdestructor_mid = env->GetStaticMethodID(jmessage_class, "getDestructor", "()J");
+  jlong jdestructor_handle = env->CallStaticLongMethod(jmessage_class, jdestructor_mid);
+
+  destroy_message_signature destroy_message =
+    reinterpret_cast<destroy_message_signature>(jdestructor_handle);
+  
+  destroy_message(taken_msg);
+
+  return jtaken_msg;
 }

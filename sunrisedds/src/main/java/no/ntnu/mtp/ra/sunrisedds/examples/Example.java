@@ -35,9 +35,12 @@ public class Example {
 
         writer.write(message);
 
-        // while (true) {}
+        while (true) {
+            message = reader.read();
+            logger.info("sec: " + String.valueOf(message.getSec()));
+            logger.info("nanosec: " + String.valueOf(message.getNanosec()));
+        }
 
-        
     }
 
 }

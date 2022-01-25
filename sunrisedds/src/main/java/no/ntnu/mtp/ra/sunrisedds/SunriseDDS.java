@@ -42,5 +42,5 @@ public class SunriseDDS {
 
     public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
 
-    public static native <T extends MessageDefinition> T nativeRead(int readerHandle);
+    public static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass);
 }

@@ -66,10 +66,10 @@ JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
  * Method:    nativeRead
- * Signature: (I)Lno/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition;
+ * Signature: (ILjava/lang/Class;)Lno/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition;
  */
 JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead
-  (JNIEnv *, jclass, jint);
+  (JNIEnv *, jclass, jint, jclass);
 
 #ifdef __cplusplus
 }
