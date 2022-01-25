@@ -98,6 +98,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataReader.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
@@ -117,10 +118,12 @@ add_jar("${PROJECT_NAME}_jar"
 set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Time.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Header.cpp"
 )
 
 set("${PROJECT_NAME}_msg_sources"
   "src/main/cpp/Time.c"
+  "src/main/cpp/Header.c"
 )
 
 foreach(_jni_source ${${PROJECT_NAME}_jni_sources})

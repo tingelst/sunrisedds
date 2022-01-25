@@ -42,10 +42,10 @@ builtin_interfaces_msg_Time__convert_to_java(
   assert(env != nullptr);
 
   jclass jmessage_class = env->FindClass("no/ntnu/mtp/ra/sunrisedds/msg/Time");
-  jmethodID jconstuctor_mid = env->GetMethodID(jmessage_class, "<init>", "()V");
+  jmethodID jconstructor_mid = env->GetMethodID(jmessage_class, "<init>", "()V");
 
   if (jmessage == nullptr) {
-    jmessage = env->NewObject(jmessage_class, jconstuctor_mid);
+    jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
 
   jfieldID jsec_fid = env->GetFieldID(jmessage_class, "sec", "I");

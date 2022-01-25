@@ -12,7 +12,7 @@ public class Time implements MessageDefinition {
     static {
         try {
             JNIUtils.loadImplementation(Time.class);
-        } catch (UnsatisfiedLinkError ule) {
+        } catch (final UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
             System.exit(1);
         }
@@ -25,7 +25,7 @@ public class Time implements MessageDefinition {
         return sec;
     }
 
-    public Time setSec(int sec) {
+    public Time setSec(final int sec) {
         this.sec = sec;
         return this;
     }
@@ -34,11 +34,10 @@ public class Time implements MessageDefinition {
         return nanosec;
     }
 
-    public Time setNanosec(int nanosec) {
+    public Time setNanosec(final int nanosec) {
         this.nanosec = nanosec;
         return this;
     }
-
 
     public static native long getFromJavaConverter();
 

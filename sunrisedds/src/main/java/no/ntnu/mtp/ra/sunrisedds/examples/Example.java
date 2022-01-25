@@ -10,6 +10,7 @@ import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.Topic;
+import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.Time;
 
 public class Example {
@@ -23,22 +24,23 @@ public class Example {
 
         logger.info("Created subscriber with handle: " + String.valueOf(subscriber.getHandle()));
 
-        Topic<Time> read_topic = participant.createTopic(Time.class, "rt/read_time");
-        DataReader<Time> reader = subscriber.createDataReader(read_topic);
+        Topic<Header> read_topic = participant.createTopic(Header.class, "rt/read_header");
+        DataReader<Header> reader = subscriber.createDataReader(read_topic);
 
-        Topic<Time> write_topic = participant.createTopic(Time.class, "rt/write_time");
-        DataWriter<Time> writer = publisher.createDataWriter(write_topic);
+        Topic<Header> write_topic = participant.createTopic(Header.class, "rt/write_header");
+        DataWriter<Header> writer = publisher.createDataWriter(write_topic);
 
-        Time message = new Time();
-        message.setSec(1);
-        message.setNanosec(2);
+        Header header = new Header();
+        header.getStamp().setSec(1).setNanosec(2);
+        header.setFrameId("Lars");
 
-        writer.write(message);
+        writer.write(header);
 
         while (true) {
-            message = reader.read();
-            logger.info("sec: " + String.valueOf(message.getSec()));
-            logger.info("nanosec: " + String.valueOf(message.getNanosec()));
+            Header message = reader.read();
+            logger.info("sec: " + String.valueOf(message.getStamp().getSec()));
+            logger.info("nanosec: " + String.valueOf(message.getStamp().getNanosec()));
+            logger.info(message.getFrameId());
         }
 
     }
