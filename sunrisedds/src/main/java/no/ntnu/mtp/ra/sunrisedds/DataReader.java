@@ -17,6 +17,11 @@ public class DataReader<T extends MessageDefinition> {
     this.topic = topic;
   }
 
+  public T read() {
+    T message = SunriseDDS.nativeRead(handle);
+    return message;
+  }
+
   public final int getHandle() {
     return this.handle;
   }

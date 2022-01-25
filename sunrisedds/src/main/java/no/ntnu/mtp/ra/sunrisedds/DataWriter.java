@@ -15,12 +15,14 @@ public class DataWriter<T extends MessageDefinition> {
   protected DataWriter(final int handle, final Topic<T> topic) {
     this.handle = handle;
     this.topic = topic;
+  }
 
+  public void write(T message) {
+    SunriseDDS.nativeWrite(handle, message);
   }
 
   public final int getHandle() {
     return this.handle;
   }
-
 
 }

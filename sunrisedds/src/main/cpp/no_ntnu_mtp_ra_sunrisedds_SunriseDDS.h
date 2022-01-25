@@ -55,6 +55,22 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDat
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle
   (JNIEnv *, jclass, jint, jint);
 
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeWrite
+ * Signature: (ILno/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition;)V
+ */
+JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite
+  (JNIEnv *, jclass, jint, jobject);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeRead
+ * Signature: (I)Lno/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition;
+ */
+JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead
+  (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif

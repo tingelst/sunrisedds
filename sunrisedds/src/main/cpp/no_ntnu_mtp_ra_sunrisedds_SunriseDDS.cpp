@@ -86,3 +86,30 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
   jint jreader = static_cast<jint>(reader);
   return jreader;
 }
+
+JNIEXPORT void JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite(
+  JNIEnv * env, jclass cls, jint jwriter, jobject jmessage)
+{
+  (void)cls;
+
+  dds_entity_t writer = static_cast<dds_entity_t>(jwriter);
+
+  jclass jmessage_class = env->GetObjectClass(jmessage);
+
+  jmethodID mid = env->GetStaticMethodID(jmessage_class, "getFromJavaConverter", "()J");
+  jlong jfrom_java_converter = env->CallStaticLongMethod(jmessage_class, mid);
+
+  using convert_from_java_signature = void * (*)(jobject, void *);
+  convert_from_java_signature convert_from_java =
+    reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
+
+  void * msg = convert_from_java(jmessage, nullptr);
+
+  dds_write(writer, msg);
+}
+
+JNIEXPORT jobject JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(JNIEnv *env, jclass cls, jint jreader)
+{
+}

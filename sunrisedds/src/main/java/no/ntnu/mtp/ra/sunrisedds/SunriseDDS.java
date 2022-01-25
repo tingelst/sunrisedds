@@ -1,5 +1,6 @@
 package no.ntnu.mtp.ra.sunrisedds;
 
+import java.io.ObjectInputFilter.Status;
 import java.net.ProtocolException;
 
 import org.slf4j.Logger;
@@ -39,4 +40,7 @@ public class SunriseDDS {
 
     protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle);
 
+    public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
+
+    public static native <T extends MessageDefinition> T nativeRead(int readerHandle);
 }

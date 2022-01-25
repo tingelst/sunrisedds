@@ -29,9 +29,13 @@ public class Example {
         Topic<Time> write_topic = participant.createTopic(Time.class, "rt/write_time");
         DataWriter<Time> writer = publisher.createDataWriter(write_topic);
 
-        while (true) {
+        Time message = new Time();
+        message.setSec(1);
+        message.setNanosec(2);
 
-        }
+        writer.write(message);
+
+        // while (true) {}
 
         
     }
