@@ -4,7 +4,24 @@
 #include "sunrisedds_converters.h"
 #include "sunrisedds_signatures.h"
 
+#include <vector>
+
 JavaVM * g_vm = nullptr;
+
+std::vector<double>
+get_double_array_field(JNIEnv * env, jobject message, const std::string & name)
+{
+  jclass message_class = env->GetObjectClass(message);
+  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "[D");
+  jdoubleArray object = static_cast<jdoubleArray>(env->GetObjectField(message, fid));
+  jsize length = env->GetArrayLength(object);
+  jdouble * array = env->GetDoubleArrayElements(object, 0);
+  std::vector<double> ret(length);
+  for (size_t i = 0; i < length; ++i) {
+    ret[i] = array[i];
+  }
+  return std::vector<double>();
+}
 
 sensor_msgs_msg_JointState *
 sensor_msgs_msg_JointState__convert_from_java(
@@ -21,6 +38,15 @@ sensor_msgs_msg_JointState__convert_from_java(
 
   message->header = *reinterpret_cast<std_msgs_msg_Header *>(
     get_object_field(env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;"));
+
+//   std::vector<double> position = get_double_array_field(env, jmessage, "position");
+//   message->position = *dds_sequence_double__alloc();
+//   message->position._buffer = dds_sequence_double_allocbuf(position.size());
+//   message->position._length = position.size();
+//   message->position._release = true;
+//   for (size_t i = 0; i < position.size(); ++i) {
+//     message->position._buffer[i] = position[i];
+//   }
 
   return message;
 }
