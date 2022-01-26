@@ -77,7 +77,10 @@ public class Example {
         position.setPosition(outmessage);
         joint_position_writer.write(position);
 
-        jointstatewriter.write(new JointState().setHeader(header));
+        double[] p = new double[]{1.0, 2.0, 3.0};
+
+        jointstatewriter.write(new JointState().setHeader(header).setPosition(p));
+        // jointstatewriter.write(new JointState().setHeader(header));
 
         while (true) {
             JointPosition msg = position_reader.read();

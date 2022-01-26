@@ -39,14 +39,14 @@ sensor_msgs_msg_JointState__convert_from_java(
   message->header = *reinterpret_cast<std_msgs_msg_Header *>(
     get_object_field(env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;"));
 
-//   std::vector<double> position = get_double_array_field(env, jmessage, "position");
+  std::vector<double> position = get_double_array_field(env, jmessage, "position");
 //   message->position = *dds_sequence_double__alloc();
-//   message->position._buffer = dds_sequence_double_allocbuf(position.size());
-//   message->position._length = position.size();
-//   message->position._release = true;
-//   for (size_t i = 0; i < position.size(); ++i) {
-//     message->position._buffer[i] = position[i];
-//   }
+  message->position._buffer = dds_sequence_double_allocbuf(position.size());
+  message->position._length = position.size();
+  message->position._release = true;
+  for (size_t i = 0; i < position.size(); ++i) {
+    message->position._buffer[i] = position[i];
+  }
 
   return message;
 }
