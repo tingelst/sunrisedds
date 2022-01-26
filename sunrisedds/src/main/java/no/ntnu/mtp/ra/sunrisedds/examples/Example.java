@@ -51,7 +51,7 @@ public class Example {
         Topic<JointQuantity> joint_quantity_write = participant.createTopic(JointQuantity.class, "rt/write_quantity");
         DataWriter<JointQuantity> joint_quantity_writer = publisher.createDataWriter(joint_quantity_write);
 
-        Topic<JointPosition> joint_position_write = participant.createTopic(JointPosition.class,"rt/write_position");
+        Topic<JointPosition> joint_position_write = participant.createTopic(JointPosition.class, "rt/write_position");
         DataWriter<JointPosition> joint_position_writer = publisher.createDataWriter(joint_position_write);
 
         Topic<JointPosition> read_position = participant.createTopic(JointPosition.class, "rt/read_position");
@@ -59,7 +59,7 @@ public class Example {
 
         Topic<JointState> jointstate_topic = participant.createTopic(JointState.class, "rt/joint_states");
         DataWriter<JointState> jointstatewriter = publisher.createDataWriter(jointstate_topic);
-        
+
         Header header = new Header();
         header.getStamp().setSec(1).setNanosec(2);
         header.setFrameId("Lars");
@@ -70,16 +70,20 @@ public class Example {
         outmessage.setA1(1.18181).setA2(0.3).setA3(3.).setA4(4.).setA5(52.).setA6(6.).setA7(7.);
         joint_quantity_writer.write(outmessage);
 
-
         JointPosition position = new JointPosition();
         position.getHeader().setFrameId("Lars22");
         position.getHeader().getStamp().setSec(99).setNanosec(22);
         position.setPosition(outmessage);
         joint_position_writer.write(position);
 
-        double[] p = new double[]{1.0, 2.0, 3.0};
+        double[] p = new double[] { 1.0, 2.0, 3.0 };
+        double[] v = new double[] { 1.0, 2.0, 3.0 };
+        double[] e = new double[] { 1.0, 2.0, 3.0 };
 
-        jointstatewriter.write(new JointState().setHeader(header).setPosition(p));
+        String[] n = new String[] { "a", "b", "c" };
+
+        jointstatewriter
+                .write(new JointState().setHeader(header).setName(n).setPosition(p).setVelocity(v).setEffort(e));
         // jointstatewriter.write(new JointState().setHeader(header));
 
         while (true) {
