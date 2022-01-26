@@ -1,6 +1,7 @@
 #include "no_ntnu_mtp_ra_sunrisedds_msg_Header.h"
 #include <dds/dds.h>
 #include "Header.h"
+#include "sunrisedds_converters.h"
 #include "sunrisedds_signatures.h"
 
 JavaVM * g_vm = nullptr;
@@ -17,26 +18,10 @@ std_msgs_msg_Header__convert_from_java(jobject jmessage, std_msgs_msg_Header * m
     message = std_msgs_msg_Header__alloc();
   }
 
-  jclass jmessage_class = env->FindClass("no/ntnu/mtp/ra/sunrisedds/msg/Header");
+  message->stamp = *reinterpret_cast<builtin_interfaces_msg_Time *>(
+    convert_object_field(env, jmessage, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;"));
 
-  jfieldID jstamp_fid =
-    env->GetFieldID(jmessage_class, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;");
-  jobject jstamp = env->GetObjectField(jmessage, jstamp_fid);
-  jclass jstamp_class = env->GetObjectClass(jstamp);
-  jmethodID jstamp_from_java_mid =
-    env->GetStaticMethodID(jstamp_class, "getFromJavaConverter", "()J");
-  jlong jstamp_from_java_converter = env->CallStaticLongMethod(jstamp_class, jstamp_from_java_mid);
-  convert_from_java_signature convert_stamp_from_java =
-    reinterpret_cast<convert_from_java_signature>(jstamp_from_java_converter);
-  builtin_interfaces_msg_Time * stamp =
-    reinterpret_cast<builtin_interfaces_msg_Time *>(convert_stamp_from_java(jstamp, nullptr));
-  message->stamp = *stamp;
-
-  jfieldID jframe_id_fid = env->GetFieldID(jmessage_class, "frameId", "Ljava/lang/String;");
-  jstring jframe_id = static_cast<jstring>(env->GetObjectField(jmessage, jframe_id_fid));
-  const char * frame_id = env->GetStringUTFChars(jframe_id, 0);
-  message->frame_id = dds_string_dup(frame_id);
-  env->ReleaseStringUTFChars(jframe_id, frame_id);
+  message->frame_id = dds_string_dup(convert_string_field(env, jmessage, "frameId").c_str());
 
   return message;
 }

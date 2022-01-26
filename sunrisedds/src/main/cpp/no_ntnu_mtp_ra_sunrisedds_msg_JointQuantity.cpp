@@ -3,8 +3,12 @@
 #include "JointQuantity.h"
 #include "no_ntnu_mtp_ra_sunrisedds_msg_JointQuantity.h"
 #include "sunrisedds_signatures.h"
+#include "sunrisedds_converters.h"
+
+#include <string>
 
 JavaVM * g_vm = nullptr;
+
 
 sunrisedds_interfaces_msg_JointQuantity *
 sunrisedds_interfaces_msg_JointQuantity__convert_from_java(
@@ -19,24 +23,13 @@ sunrisedds_interfaces_msg_JointQuantity__convert_from_java(
     message = sunrisedds_interfaces_msg_JointQuantity__alloc();
   }
 
-  jclass jmessage_class = env->GetObjectClass(jmessage);
-
-  message->a1 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a1", "D")));
-  message->a2 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a2", "D")));
-  message->a3 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a3", "D")));
-  message->a4 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a4", "D")));
-  message->a5 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a5", "D")));
-  message->a6 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a6", "D")));
-  message->a7 =
-    static_cast<double>(env->GetDoubleField(jmessage, env->GetFieldID(jmessage_class, "a7", "D")));
-
-
+  message->a1 = convert_double_field(env, jmessage, "a1");
+  message->a2 = convert_double_field(env, jmessage, "a2");
+  message->a3 = convert_double_field(env, jmessage, "a3");
+  message->a4 = convert_double_field(env, jmessage, "a4");
+  message->a5 = convert_double_field(env, jmessage, "a5");
+  message->a6 = convert_double_field(env, jmessage, "a6");
+  message->a7 = convert_double_field(env, jmessage, "a7");
 
   return message;
 }

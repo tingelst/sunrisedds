@@ -51,12 +51,13 @@ public class Example {
         writer.write(header);
 
         JointQuantity outmessage = new JointQuantity();
-        outmessage.setA1(1.18181).setA2(0.3).setA3(3.).setA4(4.).setA5(5.).setA6(6.).setA7(7.);
+        outmessage.setA1(1.18181).setA2(0.3).setA3(3.).setA4(4.).setA5(52.).setA6(6.).setA7(7.);
         joint_quantity_writer.write(outmessage);
 
 
         JointPosition position = new JointPosition();
         position.getHeader().setFrameId("Lars22");
+        position.getHeader().getStamp().setSec(99).setNanosec(22);
         position.setPosition(outmessage);
         joint_position_writer.write(position);
 

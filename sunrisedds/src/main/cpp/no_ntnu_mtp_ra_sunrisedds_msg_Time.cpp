@@ -2,7 +2,7 @@
 
 #include "Time.h"
 #include "no_ntnu_mtp_ra_sunrisedds_msg_Time.h"
-
+#include "sunrisedds_converters.h"
 
 JavaVM * g_vm = nullptr;
 
@@ -15,20 +15,13 @@ builtin_interfaces_msg_Time__convert_from_java(
   g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6);
   assert(env != nullptr);
 
-  jclass jmessage_class = env->GetObjectClass(jmessage);
-
-  jfieldID jsec_fid = env->GetFieldID(jmessage_class, "sec", "I");
-  jint jsec = env->GetIntField(jmessage, jsec_fid);
-
-  jfieldID jnanosec_fid = env->GetFieldID(jmessage_class, "nanosec", "I");
-  jint jnanosec = env->GetIntField(jmessage, jnanosec_fid);
-
   if (message == nullptr) {
     message = builtin_interfaces_msg_Time__alloc();
   }
 
-  message->sec = static_cast<int32_t>(jsec);
-  message->nanosec = static_cast<uint32_t>(jnanosec);  // TODO(tingelst): Could overflow
+  message->sec = static_cast<int32_t>(convert_int_field(env, jmessage, "sec"));
+  message->nanosec = static_cast<uint32_t>(
+    convert_int_field(env, jmessage, "nanosec"));  // TODO(tingelst): Could overflow
 
   return message;
 }
