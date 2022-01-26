@@ -1,0 +1,13 @@
+#include "Header.idl"
+
+module sensor_msgs {
+  module msg {
+    struct JointState {
+      std_msgs::msg::Header header;
+      sequence<string> name;
+      sequence<double> position;
+      sequence<double> velocity;
+      sequence<double> effort;
+    };
+  };
+};

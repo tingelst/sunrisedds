@@ -101,6 +101,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointQuantity.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointPosition.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointState.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
@@ -123,6 +124,7 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Header.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointQuantity.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointPosition.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointState.cpp"
 )
 
 set("${PROJECT_NAME}_msg_sources"
@@ -130,6 +132,8 @@ set("${PROJECT_NAME}_msg_sources"
   "src/main/cpp/Header.c"
   "src/main/cpp/JointQuantity.c"
   "src/main/cpp/JointPosition.c"
+  # "src/main/cpp/JointState.c"
+
 )
 
 set("${PROJECT_NAME}_sources"
