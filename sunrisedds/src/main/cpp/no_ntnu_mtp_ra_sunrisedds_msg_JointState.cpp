@@ -19,12 +19,14 @@ sensor_msgs_msg_JointState__convert_from_java(
     message = sensor_msgs_msg_JointState__alloc();
   }
 
+  message->header = *reinterpret_cast<std_msgs_msg_Header *>(
+    get_object_field(env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;"));
+
   return message;
 }
 
 jobject
-sensor_msgs_msg_JointState__convert_to_java(
-  sensor_msgs_msg_JointState * message, jobject jmessage)
+sensor_msgs_msg_JointState__convert_to_java(sensor_msgs_msg_JointState * message, jobject jmessage)
 {
   JNIEnv * env = nullptr;
   assert(g_vm != nullptr);
@@ -36,7 +38,6 @@ sensor_msgs_msg_JointState__convert_to_java(
   if (jmessage == nullptr) {
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
-
 
   return jmessage;
 }

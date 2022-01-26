@@ -26,6 +26,7 @@ import no.ntnu.mtp.ra.sunrisedds.Topic;
 import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointPosition;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointQuantity;
+import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 
 public class Example {
 
@@ -55,6 +56,9 @@ public class Example {
 
         Topic<JointPosition> read_position = participant.createTopic(JointPosition.class, "rt/read_position");
         DataReader<JointPosition> position_reader = subscriber.createDataReader(read_position);
+
+        Topic<JointState> jointstate_topic = participant.createTopic(JointState.class, "rt/joint_states");
+        DataWriter<JointState> jointstatewriter = publisher.createDataWriter(jointstate_topic);
         
         Header header = new Header();
         header.getStamp().setSec(1).setNanosec(2);
@@ -72,6 +76,8 @@ public class Example {
         position.getHeader().getStamp().setSec(99).setNanosec(22);
         position.setPosition(outmessage);
         joint_position_writer.write(position);
+
+        jointstatewriter.write(new JointState().setHeader(header));
 
         while (true) {
             JointPosition msg = position_reader.read();

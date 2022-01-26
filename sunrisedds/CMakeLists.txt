@@ -132,7 +132,7 @@ set("${PROJECT_NAME}_msg_sources"
   "src/main/cpp/Header.c"
   "src/main/cpp/JointQuantity.c"
   "src/main/cpp/JointPosition.c"
-  # "src/main/cpp/JointState.c"
+  "src/main/cpp/JointState.c"
 
 )
 
