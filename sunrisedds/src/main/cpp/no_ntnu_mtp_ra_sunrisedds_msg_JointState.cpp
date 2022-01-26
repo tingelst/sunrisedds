@@ -8,42 +8,6 @@
 
 JavaVM * g_vm = nullptr;
 
-void
-get_string_array_field(
-  JNIEnv * env, jobject message, const std::string & name, dds_sequence_string * out)
-{
-  jclass message_class = env->GetObjectClass(message);
-  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "[Ljava/lang/String;");
-  jobjectArray string_array = static_cast<jobjectArray>(env->GetObjectField(message, fid));
-  jsize length = env->GetArrayLength(string_array);
-
-  out->_buffer = dds_sequence_string_allocbuf(length);
-  out->_length = length;
-  out->_release = true;
-  for (size_t i = 0; i < length; ++i) {
-    jstring str = static_cast<jstring>(env->GetObjectArrayElement(string_array, i));
-    out->_buffer[i] = dds_string_dup(env->GetStringUTFChars(str, 0));
-  }
-}
-
-void
-get_double_array_field(
-  JNIEnv * env, jobject message, const std::string & name, dds_sequence_double * out)
-{
-  jclass message_class = env->GetObjectClass(message);
-  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "[D");
-  jdoubleArray object = static_cast<jdoubleArray>(env->GetObjectField(message, fid));
-  jsize length = env->GetArrayLength(object);
-  jdouble * array = env->GetDoubleArrayElements(object, 0);
-
-  out->_buffer = dds_sequence_double_allocbuf(length);
-  out->_length = length;
-  out->_release = true;
-  for (size_t i = 0; i < length; ++i) {
-    out->_buffer[i] = array[i];
-  }
-}
-
 sensor_msgs_msg_JointState *
 sensor_msgs_msg_JointState__convert_from_java(
   jobject jmessage, sensor_msgs_msg_JointState * message)
