@@ -100,6 +100,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointQuantity.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointPosition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
@@ -121,12 +122,20 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Time.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_Header.cpp"
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointQuantity.cpp"
+  "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_msg_JointPosition.cpp"
 )
 
 set("${PROJECT_NAME}_msg_sources"
   "src/main/cpp/Time.c"
   "src/main/cpp/Header.c"
+  "src/main/cpp/JointQuantity.c"
+  "src/main/cpp/JointPosition.c"
 )
+
+set("${PROJECT_NAME}_sources"
+  "src/main/cpp/sunrisedds_converters.cpp"
+)
+
 
 foreach(_jni_source ${${PROJECT_NAME}_jni_sources})
 
@@ -134,7 +143,10 @@ foreach(_jni_source ${${PROJECT_NAME}_jni_sources})
   string_camel_case_to_lower_case_underscore("${_target_name}" _target_name)
 
   add_library(${_target_name}
-    SHARED ${_jni_source} ${${PROJECT_NAME}_msg_sources}
+    SHARED 
+    ${_jni_source} 
+    ${${PROJECT_NAME}_msg_sources}
+    ${${PROJECT_NAME}_sources}
   )
 
   set_target_properties(${_target_name} PROPERTIES

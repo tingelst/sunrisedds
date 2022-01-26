@@ -18,73 +18,73 @@ public class JointQuantity implements MessageDefinition {
         }
     }
 
-    float a1;
-    float a2;
-    float a3;
-    float a4;
-    float a5;
-    float a6;
-    float a7;
+    double a1;
+    double a2;
+    double a3;
+    double a4;
+    double a5;
+    double a6;
+    double a7;
 
-    public float getA1() {
+    public double getA1() {
         return a1;
     }
 
-    public JointQuantity setA1(float a1) {
+    public JointQuantity setA1(final double a1) {
         this.a1 = a1;
         return this;
     }
 
-    public float getA2() {
+    public double getA2() {
         return a2;
     }
 
-    public JointQuantity setA2(float a2) {
+    public JointQuantity setA2(final double a2) {
         this.a2 = a2;
         return this;
     }
 
-    public float getA3() {
+    public double getA3() {
         return a3;
     }
 
-    public JointQuantity setA3(float a3) {
+    public JointQuantity setA3(final double a3) {
         this.a3 = a3;
         return this;
     }
 
-    public float getA4() {
+    public double getA4() {
         return a4;
     }
 
-    public JointQuantity setA4(float a4) {
+    public JointQuantity setA4(final double a4) {
         this.a4 = a4;
         return this;
     }
 
-    public float getA5() {
+    public double getA5() {
         return a5;
     }
 
-    public JointQuantity setA5(float a5) {
+    public JointQuantity setA5(final double a5) {
         this.a5 = a5;
         return this;
     }
 
-    public float getA6() {
+    public double getA6() {
         return a6;
     }
 
-    public JointQuantity setA6(float a6) {
+    public JointQuantity setA6(final double a6) {
         this.a6 = a6;
         return this;
     }
 
-    public float getA7() {
+    public double getA7() {
         return a7;
     }
 
-    public JointQuantity setA7(float a7) {
+    public JointQuantity setA7(final double a7) {
         this.a7 = a7;
         return this;
     }

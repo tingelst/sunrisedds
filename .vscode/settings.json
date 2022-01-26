@@ -5,5 +5,8 @@
         "build/jars/log4j-1.2.17.jar",
         "build/jars/slf4j-api-1.7.21.jar",
         "build/jars/slf4j-jdk14-1.7.21.jar"
-    ]
+    ],
+    "files.associations": {
+        "jointquantity.h": "c"
+    }
 }

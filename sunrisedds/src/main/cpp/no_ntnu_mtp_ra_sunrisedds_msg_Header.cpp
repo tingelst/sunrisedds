@@ -1,10 +1,7 @@
 #include "no_ntnu_mtp_ra_sunrisedds_msg_Header.h"
 #include <dds/dds.h>
 #include "Header.h"
-
-using convert_from_java_signature = void * (*)(jobject, void *);
-using convert_to_java_signature = jobject (*)(void *, jobject);
-using destroy_message_signature = void (*)(void *);
+#include "sunrisedds_signatures.h"
 
 JavaVM * g_vm = nullptr;
 
@@ -28,8 +25,7 @@ std_msgs_msg_Header__convert_from_java(jobject jmessage, std_msgs_msg_Header * m
   jclass jstamp_class = env->GetObjectClass(jstamp);
   jmethodID jstamp_from_java_mid =
     env->GetStaticMethodID(jstamp_class, "getFromJavaConverter", "()J");
-  jlong jstamp_from_java_converter =
-    env->CallStaticLongMethod(jmessage_class, jstamp_from_java_mid);
+  jlong jstamp_from_java_converter = env->CallStaticLongMethod(jstamp_class, jstamp_from_java_mid);
   convert_from_java_signature convert_stamp_from_java =
     reinterpret_cast<convert_from_java_signature>(jstamp_from_java_converter);
   builtin_interfaces_msg_Time * stamp =
