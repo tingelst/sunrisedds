@@ -19,9 +19,9 @@ std_msgs_msg_Header__convert_from_java(jobject jmessage, std_msgs_msg_Header * m
   }
 
   message->stamp = *reinterpret_cast<builtin_interfaces_msg_Time *>(
-    convert_object_field(env, jmessage, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;"));
+    get_object_field(env, jmessage, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;"));
 
-  message->frame_id = dds_string_dup(convert_string_field(env, jmessage, "frameId").c_str());
+  message->frame_id = dds_string_dup(get_string_field(env, jmessage, "frameId").c_str());
 
   return message;
 }
@@ -40,19 +40,8 @@ std_msgs_msg_Header__convert_to_java(std_msgs_msg_Header * message, jobject jmes
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
 
-  jfieldID jstamp_fid =
-    env->GetFieldID(jmessage_class, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;");
-  jobject jstamp = env->GetObjectField(jmessage, jstamp_fid);
-  jclass jstamp_class = env->GetObjectClass(jstamp);
-  jmethodID jto_mid = env->GetStaticMethodID(jstamp_class, "getToJavaConverter", "()J");
-  jlong jto_java_converter = env->CallStaticLongMethod(jmessage_class, jto_mid);
-  convert_to_java_signature convert_to_java =
-    reinterpret_cast<convert_to_java_signature>(jto_java_converter);
-  jstamp = convert_to_java(&message->stamp, nullptr);
-  env->SetObjectField(jmessage, jstamp_fid, jstamp);
-
-  jfieldID jframe_id_fid = env->GetFieldID(jmessage_class, "frameId", "Ljava/lang/String;");
-  env->SetObjectField(jmessage, jframe_id_fid, env->NewStringUTF(message->frame_id));
+  set_object_field(env, jmessage, "stamp", "Lno/ntnu/mtp/ra/sunrisedds/msg/Time;", &message->stamp);
+  set_string_field(env, jmessage, "frameId", message->frame_id);
 
   return jmessage;
 }
@@ -66,6 +55,8 @@ std_msgs_msg_Header__destroy(std_msgs_msg_Header * message)
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Header_getFromJavaConverter(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(&std_msgs_msg_Header__convert_from_java);
   return ptr;
 }
@@ -73,6 +64,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_msg_Header_getFromJavaConverter(JNIEnv * env, jcl
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Header_getToJavaConverter(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(std_msgs_msg_Header__convert_to_java);
   return ptr;
 }
@@ -82,13 +75,17 @@ Java_no_ntnu_mtp_ra_sunrisedds_msg_Header_getTopicDescriptor(JNIEnv * env, jclas
 {
   (void)env;
   (void)cls;
-  return reinterpret_cast<jlong>(&std_msgs_msg_Header_desc);
+  jlong ptr = reinterpret_cast<jlong>(&std_msgs_msg_Header_desc);
+  return ptr;
 }
 
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Header_getDestructor(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(&std_msgs_msg_Header__destroy);
+  return ptr;
 }
 
 JNIEXPORT jint JNICALL

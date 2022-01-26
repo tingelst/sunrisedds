@@ -2,13 +2,10 @@
 
 #include "JointQuantity.h"
 #include "no_ntnu_mtp_ra_sunrisedds_msg_JointQuantity.h"
-#include "sunrisedds_signatures.h"
 #include "sunrisedds_converters.h"
-
-#include <string>
+#include "sunrisedds_signatures.h"
 
 JavaVM * g_vm = nullptr;
-
 
 sunrisedds_interfaces_msg_JointQuantity *
 sunrisedds_interfaces_msg_JointQuantity__convert_from_java(
@@ -23,13 +20,13 @@ sunrisedds_interfaces_msg_JointQuantity__convert_from_java(
     message = sunrisedds_interfaces_msg_JointQuantity__alloc();
   }
 
-  message->a1 = convert_double_field(env, jmessage, "a1");
-  message->a2 = convert_double_field(env, jmessage, "a2");
-  message->a3 = convert_double_field(env, jmessage, "a3");
-  message->a4 = convert_double_field(env, jmessage, "a4");
-  message->a5 = convert_double_field(env, jmessage, "a5");
-  message->a6 = convert_double_field(env, jmessage, "a6");
-  message->a7 = convert_double_field(env, jmessage, "a7");
+  message->a1 = get_double_field(env, jmessage, "a1");
+  message->a2 = get_double_field(env, jmessage, "a2");
+  message->a3 = get_double_field(env, jmessage, "a3");
+  message->a4 = get_double_field(env, jmessage, "a4");
+  message->a5 = get_double_field(env, jmessage, "a5");
+  message->a6 = get_double_field(env, jmessage, "a6");
+  message->a7 = get_double_field(env, jmessage, "a7");
 
   return message;
 }
@@ -50,20 +47,13 @@ sunrisedds_interfaces_msg_JointQuantity__convert_to_java(
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
 
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a1", "D"), static_cast<jdouble>(message->a1));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a2", "D"), static_cast<jdouble>(message->a2));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a3", "D"), static_cast<jdouble>(message->a3));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a4", "D"), static_cast<jdouble>(message->a4));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a5", "D"), static_cast<jdouble>(message->a5));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a6", "D"), static_cast<jdouble>(message->a6));
-  env->SetDoubleField(
-    jmessage, env->GetFieldID(jmessage_class, "a7", "D"), static_cast<jdouble>(message->a7));
+  set_double_field(env, jmessage, "a1", message->a1);
+  set_double_field(env, jmessage, "a2", message->a2);
+  set_double_field(env, jmessage, "a3", message->a3);
+  set_double_field(env, jmessage, "a4", message->a4);
+  set_double_field(env, jmessage, "a5", message->a5);
+  set_double_field(env, jmessage, "a6", message->a6);
+  set_double_field(env, jmessage, "a7", message->a7);
 
   return jmessage;
 }

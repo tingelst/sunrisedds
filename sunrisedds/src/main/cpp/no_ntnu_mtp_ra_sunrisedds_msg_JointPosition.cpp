@@ -1,11 +1,10 @@
+#include "no_ntnu_mtp_ra_sunrisedds_msg_JointPosition.h"
 #include <dds/dds.h>
 #include "JointPosition.h"
-#include "no_ntnu_mtp_ra_sunrisedds_msg_JointPosition.h"
-#include "sunrisedds_signatures.h"
 #include "sunrisedds_converters.h"
+#include "sunrisedds_signatures.h"
 
 JavaVM * g_vm = nullptr;
-
 
 sunrisedds_interfaces_msg_JointPosition *
 sunrisedds_interfaces_msg_JointPosition__convert_from_java(
@@ -21,11 +20,10 @@ sunrisedds_interfaces_msg_JointPosition__convert_from_java(
   }
 
   message->header = *reinterpret_cast<std_msgs_msg_Header *>(
-    convert_object_field(env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;"));
+    get_object_field(env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;"));
 
-  message->position =
-    *reinterpret_cast<sunrisedds_interfaces_msg_JointQuantity *>(convert_object_field(
-      env, jmessage, "position", "Lno/ntnu/mtp/ra/sunrisedds/msg/JointQuantity;"));
+  message->position = *reinterpret_cast<sunrisedds_interfaces_msg_JointQuantity *>(
+    get_object_field(env, jmessage, "position", "Lno/ntnu/mtp/ra/sunrisedds/msg/JointQuantity;"));
 
   return message;
 }
@@ -41,10 +39,14 @@ sunrisedds_interfaces_msg_JointPosition__convert_to_java(
 
   jclass jmessage_class = env->FindClass("no/ntnu/mtp/ra/sunrisedds/msg/JointPosition");
   jmethodID jconstructor_mid = env->GetMethodID(jmessage_class, "<init>", "()V");
-
   if (jmessage == nullptr) {
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
+
+  set_object_field(
+    env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;", &message->header);
+  set_object_field(
+    env, jmessage, "position", "Lno/ntnu/mtp/ra/sunrisedds/msg/JointQuantity;", &message->position);
 
   return jmessage;
 }
@@ -78,7 +80,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_msg_JointPosition_getTopicDescriptor(JNIEnv * env
 {
   (void)env;
   (void)cls;
-  return reinterpret_cast<jlong>(&sunrisedds_interfaces_msg_JointPosition_desc);
+  jlong ptr = reinterpret_cast<jlong>(&sunrisedds_interfaces_msg_JointPosition_desc);
+  return ptr;
 }
 
 JNIEXPORT jlong JNICALL

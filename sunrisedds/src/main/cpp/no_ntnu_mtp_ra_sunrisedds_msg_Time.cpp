@@ -19,9 +19,9 @@ builtin_interfaces_msg_Time__convert_from_java(
     message = builtin_interfaces_msg_Time__alloc();
   }
 
-  message->sec = static_cast<int32_t>(convert_int_field(env, jmessage, "sec"));
+  message->sec = static_cast<int32_t>(get_int_field(env, jmessage, "sec"));
   message->nanosec = static_cast<uint32_t>(
-    convert_int_field(env, jmessage, "nanosec"));  // TODO(tingelst): Could overflow
+    get_int_field(env, jmessage, "nanosec"));  // TODO(tingelst): Could overflow
 
   return message;
 }
@@ -42,13 +42,8 @@ builtin_interfaces_msg_Time__convert_to_java(
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
 
-  jfieldID jsec_fid = env->GetFieldID(jmessage_class, "sec", "I");
-  jint jsec = static_cast<jint>(message->sec);
-  env->SetIntField(jmessage, jsec_fid, jsec);
-
-  jfieldID jnanosec_fid = env->GetFieldID(jmessage_class, "nanosec", "I");
-  jint jnanosec = static_cast<jint>(message->nanosec);
-  env->SetIntField(jmessage, jnanosec_fid, jnanosec);
+  set_int_field(env, jmessage, "sec", message->sec);
+  set_int_field(env, jmessage, "nanosec", message->nanosec);
 
   return jmessage;
 }
@@ -67,6 +62,8 @@ builtin_interfaces_msg_Time__destroy(builtin_interfaces_msg_Time * message)
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Time_getFromJavaConverter(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(&builtin_interfaces_msg_Time__convert_from_java);
   return ptr;
 }
@@ -79,6 +76,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_msg_Time_getFromJavaConverter(JNIEnv * env, jclas
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Time_getToJavaConverter(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(&builtin_interfaces_msg_Time__convert_to_java);
   return ptr;
 }
@@ -104,6 +103,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_msg_Time_getTopicDescriptor(JNIEnv * env, jclass 
 JNIEXPORT jlong JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_msg_Time_getDestructor(JNIEnv * env, jclass cls)
 {
+  (void)env;
+  (void)cls;
   jlong ptr = reinterpret_cast<jlong>(&builtin_interfaces_msg_Time__destroy);
   return ptr;
 }

@@ -38,12 +38,12 @@ public class Example {
         Topic<JointQuantity> joint_quantity_write = participant.createTopic(JointQuantity.class, "rt/write_quantity");
         DataWriter<JointQuantity> joint_quantity_writer = publisher.createDataWriter(joint_quantity_write);
 
-
         Topic<JointPosition> joint_position_write = participant.createTopic(JointPosition.class,"rt/write_position");
         DataWriter<JointPosition> joint_position_writer = publisher.createDataWriter(joint_position_write);
-        
-        
 
+        Topic<JointPosition> read_position = participant.createTopic(JointPosition.class, "rt/read_position");
+        DataReader<JointPosition> position_reader = subscriber.createDataReader(read_position);
+        
         Header header = new Header();
         header.getStamp().setSec(1).setNanosec(2);
         header.setFrameId("Lars");
@@ -62,8 +62,11 @@ public class Example {
         joint_position_writer.write(position);
 
         while (true) {
-            Header message = reader.read();
-            logger.info(String.valueOf(message.getStamp().getSec()));
+            JointPosition msg = position_reader.read();
+            // logger.info(msg.getHeader().getFrameId());
+            // logger.info(String.valueOf(msg.getHeader().getStamp().getSec()));
+            // logger.info(String.valueOf(msg.getPosition().getA7()));
+
         }
 
     }
