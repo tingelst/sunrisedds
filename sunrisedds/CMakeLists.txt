@@ -102,6 +102,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointQuantity.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointPosition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointState.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/OnDataAvailableCallbackInterface.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )

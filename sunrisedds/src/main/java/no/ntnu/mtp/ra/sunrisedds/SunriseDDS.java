@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class SunriseDDS {
@@ -53,4 +54,7 @@ public class SunriseDDS {
     public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
 
     public static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass);
+
+    public static native void nativeAddOnDataAvailableCallback(int readerHandle,
+            OnDataAvailableCallbackInterface callback);
 }

@@ -30,6 +30,8 @@ import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointPosition;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointQuantity;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
 
 public class Example {
 
@@ -65,7 +67,13 @@ public class Example {
 
         DataReader<JointState> jsreader = subscriber.createDataReader(jointstate_topic);
 
+        jsreader.addOnDataAvailableCallback(new OnDataAvailableCallbackInterface() {
+            @Override
+            public void callback() {
+                logger.info("from callback");
 
+            }
+        });
 
         Header header = new Header();
         header.getStamp().setSec(1).setNanosec(2);
@@ -97,17 +105,15 @@ public class Example {
         position_list.add(1919.0);
         position_list.add(373737.0);
 
-
-
         JointState js = new JointState();
         js.setName(name);
         js.setPosition(position_list);
 
         jointstatewriter.write(js);
 
-
         // jointstatewriter
-        //         .write(new JointState().setHeader(header).setName(n).setPosition(p).setVelocity(v).setEffort(e));
+        // .write(new
+        // JointState().setHeader(header).setName(n).setPosition(p).setVelocity(v).setEffort(e));
         // jointstatewriter.write(new JointState().setHeader(header));
 
         while (true) {

@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
 
 public class DataReader<T extends MessageDefinition> {
   private static final Logger logger = LoggerFactory.getLogger(DataReader.class);
@@ -24,6 +25,8 @@ public class DataReader<T extends MessageDefinition> {
   private int handle;
 
   private Topic<T> topic;
+
+  private boolean dataAvailable = false;
 
   protected DataReader(final int handle, final Topic<T> topic) {
     this.handle = handle;
@@ -33,6 +36,10 @@ public class DataReader<T extends MessageDefinition> {
   public T read() {
     T message = SunriseDDS.nativeRead(handle, topic.getMessageType());
     return message;
+  }
+
+  public void addOnDataAvailableCallback(OnDataAvailableCallbackInterface callback) {
+    SunriseDDS.nativeAddOnDataAvailableCallback(this.handle, callback);
   }
 
   public final int getHandle() {

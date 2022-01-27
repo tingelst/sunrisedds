@@ -16,6 +16,11 @@
 #include "no_ntnu_mtp_ra_sunrisedds_SunriseDDS.h"
 #include "sunrisedds_signatures.h"
 
+JavaVM * g_vm = nullptr;
+jobject g_on_data_available_callback;
+
+#define MAX_SAMPLES 1
+
 JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipantHandle(
   JNIEnv * env, jclass cls)
@@ -146,6 +151,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
     }
   }
 
+  // TODO(tingelst): Implement non-blocking take (dds_take).
+
   jmethodID jto_mid = env->GetStaticMethodID(jmessage_class, "getToJavaConverter", "()J");
   jlong jto_java_converter = env->CallStaticLongMethod(jmessage_class, jto_mid);
 
@@ -163,4 +170,38 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
   destroy_message(taken_msg);
 
   return jtaken_msg;
+}
+
+JNIEXPORT void JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeAddOnDataAvailableCallback(
+  JNIEnv * env, jclass cls, jint jreader, jobject callback)
+{
+}
+
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM * vm, void *)
+{
+  // Can only call this once
+  if (g_vm == nullptr) {
+    g_vm = vm;
+  }
+
+  JNIEnv * env;
+  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
+    return JNI_ERR;
+  }
+
+  return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL
+JNI_OnUnload(JavaVM * vm, void *)
+{
+  assert(g_vm != nullptr);
+  assert(g_vm == vm);
+
+  JNIEnv * env;
+  if (g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) == JNI_OK) {
+    env->DeleteGlobalRef(g_on_data_available_callback);
+  }
 }
