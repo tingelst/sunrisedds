@@ -82,16 +82,27 @@ get_string_array_field(
   JNIEnv * env, jobject message, const std::string & name, dds_sequence_string * out)
 {
   jclass message_class = env->GetObjectClass(message);
-  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "[Ljava/lang/String;");
-  jobjectArray string_array = static_cast<jobjectArray>(env->GetObjectField(message, fid));
-  jsize length = env->GetArrayLength(string_array);
+  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "Ljava/util/List;");
 
-  out->_buffer = dds_sequence_string_allocbuf(length);
-  out->_length = length;
-  out->_release = true;
-  for (size_t i = 0; i < length; ++i) {
-    jstring str = static_cast<jstring>(env->GetObjectArrayElement(string_array, i));
-    out->_buffer[i] = dds_string_dup(env->GetStringUTFChars(str, 0));
+  jclass list_class = env->FindClass("java/util/List");
+  jmethodID get_mid = env->GetMethodID(list_class, "get", "(I)Ljava/lang/Object;");
+  jmethodID size_mid = env->GetMethodID(list_class, "size", "()I");
+
+  jobject list_object = env->GetObjectField(message, fid);
+  if (list_object != nullptr) {
+    jint length = env->CallIntMethod(list_object, size_mid);
+    out->_buffer = dds_sequence_string_allocbuf(length);
+    out->_length = length;
+    out->_release = true;
+    for (int i = 0; i < length; ++i) {
+      jstring element = static_cast<jstring>(env->CallObjectMethod(list_object, get_mid, i));
+      if (element != nullptr) {
+        const char * str = env->GetStringUTFChars(element, 0);
+        out->_buffer[i] = dds_string_dup(str);
+        env->ReleaseStringUTFChars(element, str);
+      }
+      env->DeleteLocalRef(element);
+    }
   }
 }
 
@@ -100,15 +111,27 @@ get_double_array_field(
   JNIEnv * env, jobject message, const std::string & name, dds_sequence_double * out)
 {
   jclass message_class = env->GetObjectClass(message);
-  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "[D");
-  jdoubleArray double_array = static_cast<jdoubleArray>(env->GetObjectField(message, fid));
-  jsize length = env->GetArrayLength(double_array);
-  jdouble * array = env->GetDoubleArrayElements(double_array, 0);
+  jfieldID fid = env->GetFieldID(message_class, name.c_str(), "Ljava/util/List;");
 
-  out->_buffer = dds_sequence_double_allocbuf(length);
-  out->_length = length;
-  out->_release = true;
-  for (size_t i = 0; i < length; ++i) {
-    out->_buffer[i] = array[i];
+  jclass list_class = env->FindClass("java/util/List");
+  jmethodID list_get_mid = env->GetMethodID(list_class, "get", "(I)Ljava/lang/Object;");
+  jmethodID list_size_mid = env->GetMethodID(list_class, "size", "()I");
+
+  jclass double_class = env->FindClass("java/lang/Double");
+  jmethodID double_value_mid = env->GetMethodID(double_class, "doubleValue", "()D");
+
+  jobject list_object = env->GetObjectField(message, fid);
+  if (list_object != nullptr) {
+    jint length = env->CallIntMethod(list_object, list_size_mid);
+    out->_buffer = dds_sequence_double_allocbuf(length);
+    out->_length = length;
+    out->_release = true;
+    for (int i = 0; i < length; ++i) {
+      jobject element = env->CallObjectMethod(list_object, list_get_mid, i);
+      if (element != nullptr) {
+        out->_buffer[i] = env->CallDoubleMethod(element, double_value_mid);
+      }
+      env->DeleteLocalRef(element);
+    }
   }
 }

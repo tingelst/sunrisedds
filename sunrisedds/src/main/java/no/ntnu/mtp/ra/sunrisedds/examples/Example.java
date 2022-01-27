@@ -13,6 +13,9 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds.examples;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +63,10 @@ public class Example {
         Topic<JointState> jointstate_topic = participant.createTopic(JointState.class, "rt/joint_states");
         DataWriter<JointState> jointstatewriter = publisher.createDataWriter(jointstate_topic);
 
+        DataReader<JointState> jsreader = subscriber.createDataReader(jointstate_topic);
+
+
+
         Header header = new Header();
         header.getStamp().setSec(1).setNanosec(2);
         header.setFrameId("Lars");
@@ -82,12 +89,32 @@ public class Example {
 
         String[] n = new String[] { "a", "b", "c" };
 
-        jointstatewriter
-                .write(new JointState().setHeader(header).setName(n).setPosition(p).setVelocity(v).setEffort(e));
+        List<String> name = new ArrayList<>();
+        name.add("Lars");
+        name.add("Tingelstad");
+
+        List<Double> position_list = new ArrayList<>();
+        position_list.add(1919.0);
+        position_list.add(373737.0);
+
+
+
+        JointState js = new JointState();
+        js.setName(name);
+        js.setPosition(position_list);
+
+        jointstatewriter.write(js);
+
+
+        // jointstatewriter
+        //         .write(new JointState().setHeader(header).setName(n).setPosition(p).setVelocity(v).setEffort(e));
         // jointstatewriter.write(new JointState().setHeader(header));
 
         while (true) {
-            JointPosition msg = position_reader.read();
+            JointState js2 = jsreader.read();
+            // logger.info(String.valueOf(js.getPosition()[0]));
+            // logger.info(String.valueOf(js.getPosition()[1]));
+            // JointPosition msg = position_reader.read();
             // logger.info(msg.getHeader().getFrameId());
             // logger.info(String.valueOf(msg.getHeader().getStamp().getSec()));
             // logger.info(String.valueOf(msg.getPosition().getA7()));

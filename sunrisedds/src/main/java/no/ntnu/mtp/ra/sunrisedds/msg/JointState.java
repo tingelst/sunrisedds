@@ -13,6 +13,9 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds.msg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,55 +33,51 @@ public class JointState implements MessageDefinition {
         }
     }
 
-    private Header header;
-    private String[] name;
-    private double[] position;
-    private double[] velocity;
-    private double[] effort;
+    private Header header = new Header();
+    private List<String> name = new ArrayList<>();
+    private List<Double> position = new ArrayList<>();
+    private List<Double> velocity = new ArrayList<>();
+    private List<Double> effort = new ArrayList<>();
 
+    
     public Header getHeader() {
         return header;
     }
 
-    public JointState setHeader(final Header header) {
+    public void setHeader(Header header) {
         this.header = header;
-        return this;
     }
 
-    public String[] getName() {
+    public List<String> getName() {
         return name;
     }
 
-    public JointState setName(final String[] name) {
+    public void setName(List<String> name) {
         this.name = name;
-        return this;
     }
 
-    public double[] getPosition() {
+    public List<Double> getPosition() {
         return position;
     }
 
-    public JointState setPosition(final double[] position) {
+    public void setPosition(List<Double> position) {
         this.position = position;
-        return this;
     }
 
-    public double[] getVelocity() {
+    public List<Double> getVelocity() {
         return velocity;
     }
 
-    public JointState setVelocity(final double[] velocity) {
+    public void setVelocity(List<Double> velocity) {
         this.velocity = velocity;
-        return this;
     }
 
-    public double[] getEffort() {
+    public List<Double> getEffort() {
         return effort;
     }
 
-    public JointState setEffort(final double[] effort) {
+    public void setEffort(List<Double> effort) {
         this.effort = effort;
-        return this;
     }
 
     public static native long getDestructor();

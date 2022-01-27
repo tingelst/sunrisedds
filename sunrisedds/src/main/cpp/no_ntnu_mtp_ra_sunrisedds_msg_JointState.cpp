@@ -32,6 +32,17 @@ sensor_msgs_msg_JointState__convert_from_java(
   return message;
 }
 
+void
+set_double_array_field(
+  JNIEnv * env, jobject jmessage, const std::string & name, dds_sequence_double * field)
+{
+  jclass jmessage_class = env->GetObjectClass(jmessage);
+  jfieldID fid = env->GetFieldID(jmessage_class, name.c_str(), "[D");
+  // jdoubleArray double_array = env->NewDoubleArray(field->_length);
+  // env->SetDoubleArrayRegion(double_array, 0, field->_length, field->_buffer);
+  // env->SetObjectField(jmessage, fid, double_array);
+}
+
 jobject
 sensor_msgs_msg_JointState__convert_to_java(sensor_msgs_msg_JointState * message, jobject jmessage)
 {
@@ -45,6 +56,12 @@ sensor_msgs_msg_JointState__convert_to_java(sensor_msgs_msg_JointState * message
   if (jmessage == nullptr) {
     jmessage = env->NewObject(jmessage_class, jconstructor_mid);
   }
+
+  set_object_field(
+    env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;", &message->header);
+
+
+  // set_double_array_field(env, jmessage, "position", &message->position);
 
   return jmessage;
 }
