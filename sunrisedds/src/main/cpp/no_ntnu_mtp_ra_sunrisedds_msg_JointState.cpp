@@ -1,3 +1,16 @@
+// Copyright 2022 Norwegian University of Science and Technology.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 #include "no_ntnu_mtp_ra_sunrisedds_msg_JointState.h"
 #include <dds/dds.h>
 #include "JointState.h"
@@ -32,17 +45,6 @@ sensor_msgs_msg_JointState__convert_from_java(
   return message;
 }
 
-void
-set_double_array_field(
-  JNIEnv * env, jobject jmessage, const std::string & name, dds_sequence_double * field)
-{
-  jclass jmessage_class = env->GetObjectClass(jmessage);
-  jfieldID fid = env->GetFieldID(jmessage_class, name.c_str(), "[D");
-  // jdoubleArray double_array = env->NewDoubleArray(field->_length);
-  // env->SetDoubleArrayRegion(double_array, 0, field->_length, field->_buffer);
-  // env->SetObjectField(jmessage, fid, double_array);
-}
-
 jobject
 sensor_msgs_msg_JointState__convert_to_java(sensor_msgs_msg_JointState * message, jobject jmessage)
 {
@@ -60,8 +62,10 @@ sensor_msgs_msg_JointState__convert_to_java(sensor_msgs_msg_JointState * message
   set_object_field(
     env, jmessage, "header", "Lno/ntnu/mtp/ra/sunrisedds/msg/Header;", &message->header);
 
-
-  // set_double_array_field(env, jmessage, "position", &message->position);
+  set_string_array_field(env, jmessage, "name", &message->name);
+  set_double_array_field(env, jmessage, "position", &message->position);
+  set_double_array_field(env, jmessage, "velocity", &message->velocity);
+  set_double_array_field(env, jmessage, "effort", &message->effort);
 
   return jmessage;
 }

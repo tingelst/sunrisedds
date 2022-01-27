@@ -112,13 +112,9 @@ public class Example {
 
         while (true) {
             JointState js2 = jsreader.read();
-            // logger.info(String.valueOf(js.getPosition()[0]));
-            // logger.info(String.valueOf(js.getPosition()[1]));
-            // JointPosition msg = position_reader.read();
-            // logger.info(msg.getHeader().getFrameId());
-            // logger.info(String.valueOf(msg.getHeader().getStamp().getSec()));
-            // logger.info(String.valueOf(msg.getPosition().getA7()));
-
+            logger.info(String.valueOf(js2.getPosition().get(0)));
+            logger.info(js2.getName().get(0));
+            logger.info(js2.getName().get(1));
         }
 
     }
