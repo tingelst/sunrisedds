@@ -79,6 +79,30 @@ JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead
 JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeAddOnDataAvailableCallback
   (JNIEnv *, jclass, jint, jobject);
 
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateWaitSetHandle
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateWaitSetHandle
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeWaitSetAttach
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAttach
+  (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeWaitSetWait
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait
+  (JNIEnv *, jclass, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

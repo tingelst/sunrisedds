@@ -18,22 +18,16 @@ import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 
-public class Publisher {
+public class Publisher extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
 
-    private int handle;
-
     protected Publisher(final int handle) {
-        this.handle = handle;
-    }
-
-    public final int getHandle() {
-        return this.handle;
+        super(handle);
     }
 
     public <T extends MessageDefinition> DataWriter<T> createDataWriter(Topic<T> topic) {
-        int dataWriterHandle = SunriseDDS.nativeCreateDataWriterHandle(this.handle, topic.getHandle());
+        int dataWriterHandle = SunriseDDS.nativeCreateDataWriterHandle(this.getHandle(), topic.getHandle());
         return new DataWriter<T>(dataWriterHandle, topic);
     }
 

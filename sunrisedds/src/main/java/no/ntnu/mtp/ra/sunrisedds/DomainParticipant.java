@@ -18,37 +18,37 @@ import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 
-public class DomainParticipant {
+public class DomainParticipant extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(DomainParticipant.class);
 
-    private int handle;
-
     protected DomainParticipant(final int handle) {
-        this.handle = handle;
+        super(handle);
     }
 
     public Publisher createPublisher() {
-        int publisherHandle = SunriseDDS.nativeCreatePublisherHandle(handle);
+        int publisherHandle = SunriseDDS.nativeCreatePublisherHandle(this.getHandle());
         // TODO(Lars): Check ret code and throw exception
         Publisher publisher = new Publisher(publisherHandle);
         return publisher;
     }
 
     public Subscriber createSubscriber() {
-        int subscriberHandle = SunriseDDS.nativeCreateSubscriberHandle(handle);
+        int subscriberHandle = SunriseDDS.nativeCreateSubscriberHandle(this.getHandle());
         Subscriber subscriber = new Subscriber(subscriberHandle);
         return subscriber;
     }
 
     public <T extends MessageDefinition> Topic<T> createTopic(final Class<T> messageType, final String topicName) {
-        int topicHandle = SunriseDDS.nativeCreateTopicHandle(handle, messageType, topicName);
+        int topicHandle = SunriseDDS.nativeCreateTopicHandle(this.getHandle(), messageType, topicName);
         Topic<T> topic = new Topic<>(topicHandle, messageType, topicName);
         return topic;
     }
 
-    public final int getHandle() {
-        return this.handle;
+    public WaitSet createWaitSet() {
+        int waitSetHandle = SunriseDDS.nativeCreateWaitSetHandle(this.getHandle());
+        WaitSet waitSet = new WaitSet(waitSetHandle);
+        return waitSet;
     }
 
 }

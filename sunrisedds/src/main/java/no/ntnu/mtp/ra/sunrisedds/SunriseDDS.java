@@ -57,4 +57,10 @@ public class SunriseDDS {
 
     public static native void nativeAddOnDataAvailableCallback(int readerHandle,
             OnDataAvailableCallbackInterface callback);
+
+    public static native int nativeCreateWaitSetHandle(int domainParticipantHandle);
+
+    public static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle);
+
+    public static native int nativeWaitSetWait(int waitSetHandle, int timeout);
 }

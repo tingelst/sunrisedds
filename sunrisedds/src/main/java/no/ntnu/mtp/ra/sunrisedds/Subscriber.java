@@ -18,23 +18,17 @@ import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 
-public class Subscriber {
+public class Subscriber extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
-    private int handle;
-
     protected Subscriber(final int handle) {
-        this.handle = handle;
+        super(handle);
     }
 
     public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic) {
-        int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.handle, topic.getHandle());
+        int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle());
         return new DataReader<T>(dataReaderHandle, topic);
-    }
-
-    public final int getHandle() {
-        return this.handle;
     }
 
 }
