@@ -98,10 +98,10 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAt
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
  * Method:    nativeWaitSetWait
- * Signature: (II)I
+ * Signature: (IJ)I
  */
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait
-  (JNIEnv *, jclass, jint, jint);
+  (JNIEnv *, jclass, jint, jlong);
 
 #ifdef __cplusplus
 }

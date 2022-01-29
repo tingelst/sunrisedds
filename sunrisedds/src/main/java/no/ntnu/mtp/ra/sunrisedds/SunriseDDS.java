@@ -62,5 +62,5 @@ public class SunriseDDS {
 
     public static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle);
 
-    public static native int nativeWaitSetWait(int waitSetHandle, int timeout);
+    public static native int nativeWaitSetWait(int waitSetHandle, long timeout);
 }

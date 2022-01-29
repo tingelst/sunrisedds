@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.DataWriter;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
+import no.ntnu.mtp.ra.sunrisedds.Duration;
 import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.Topic;
@@ -25,8 +26,7 @@ public class PublisherExample {
         waitSet.attach(writer);
 
         logger.info("Waiting for reader!");
-        int FOREVER = Integer.MAX_VALUE;
-        waitSet.wait(FOREVER);
+        // waitSet.wait(Integer.MAX_VALUE);
 
         JointState message = new JointState();
 

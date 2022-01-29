@@ -201,7 +201,7 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAttach(
 
 JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait(
-  JNIEnv * env, jclass cls, jint jwaitset, jint jreltimeout)
+  JNIEnv * env, jclass cls, jint jwaitset, jlong jreltimeout)
 {
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_duration_t reltimeout = static_cast<dds_duration_t>(jreltimeout);
