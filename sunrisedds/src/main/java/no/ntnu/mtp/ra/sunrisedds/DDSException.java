@@ -4,4 +4,5 @@ public class DDSException extends Exception {
     public DDSException(String message) {
         super(message);
     }
+
 }

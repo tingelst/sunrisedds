@@ -33,7 +33,7 @@ public class SunriseDDS {
         }
     }
 
-    public static DomainParticipant createDomainParticipant() {
+    public static DomainParticipant createDomainParticipant() throws DDSException {
         int handle = nativeCreateDomainParticipantHandle();
         return new DomainParticipant(handle);
     }

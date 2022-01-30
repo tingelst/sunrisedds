@@ -15,6 +15,7 @@
 
 #include "no_ntnu_mtp_ra_sunrisedds_SunriseDDS.h"
 #include "sunrisedds_signatures.h"
+#include "exceptions.hpp"
 
 JavaVM * g_vm = nullptr;
 jobject g_on_data_available_callback;
@@ -28,6 +29,7 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipantHandle(
   (void)env;
   (void)cls;
   dds_entity_t participant = dds_create_participant(DDS_DOMAIN_DEFAULT, NULL, NULL);
+  sunrisedds_throw_exception(env, -2);
   return static_cast<jint>(participant);
 }
 
