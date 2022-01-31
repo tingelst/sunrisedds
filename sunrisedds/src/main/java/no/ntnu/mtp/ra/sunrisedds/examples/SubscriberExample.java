@@ -37,16 +37,18 @@ public class SubscriberExample {
             Topic<JointState> topic = participant.createTopic(JointState.class, "rt/joint_states");
             DataReader<JointState> reader = subscriber.createDataReader(topic);
             WaitSet waitSet = participant.createWaitSet();
-
             waitSet.attach(reader);
 
-            logger.info("Waiting for writer!");
-            waitSet.wait(Duration.infinity());
-
-            JointState message = new JointState();
-
-            reader.read();
-            logger.info("Read message");
+            JointState message = null;
+            int i = 0;
+            while (message == null) {
+                waitSet.wait(Duration.infinity());
+                message = reader.take();
+                i++;
+            }
+            logger.info("Took message");
+            logger.info(String.valueOf(i));
+            logger.info(message.getHeader().getFrameId());
 
         } catch (DDSException e) {
             logger.error(e.getMessage());

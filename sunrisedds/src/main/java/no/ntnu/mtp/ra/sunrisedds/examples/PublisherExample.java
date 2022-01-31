@@ -24,6 +24,7 @@ import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.Topic;
 import no.ntnu.mtp.ra.sunrisedds.WaitSet;
+import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 
 public class PublisherExample {
@@ -47,6 +48,9 @@ public class PublisherExample {
             waitSet.wait(Duration.infinity());
 
             JointState message = new JointState();
+            Header header = new Header();
+            header.setFrameId("Lars");
+            message.setHeader(header);
 
             writer.write(message);
             logger.info("Wrote message");

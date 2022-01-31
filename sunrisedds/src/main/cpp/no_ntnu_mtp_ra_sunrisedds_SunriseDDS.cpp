@@ -125,12 +125,18 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
   (void)cls;
   dds_entity_t participant_or_subscriber = static_cast<dds_entity_t>(jparticipant_or_subscriber);
   dds_entity_t topic = static_cast<dds_entity_t>(jtopic);
-  dds_entity_t reader = dds_create_reader(participant_or_subscriber, topic, NULL, NULL);
+
+  dds_qos_t * qos = dds_create_qos();
+  dds_qset_reliability(qos, DDS_RELIABILITY_RELIABLE, DDS_SECS(10));
+  dds_entity_t reader = dds_create_reader(participant_or_subscriber, topic, qos, NULL);
+
   if (reader < 0) {
     std::string error_message =
       std::string{"dds_create_reader: "} + std::string{dds_strretcode(-reader)};
     return sunrisedds_throw_exception(env, error_message);
   }
+  dds_delete_qos(qos);
+
   jint jreader = static_cast<jint>(reader);
   return jreader;
 }
@@ -166,6 +172,7 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
   jlong jfrom_java_converter = env->CallStaticLongMethod(jmessage_class, jfrom_mid);
   convert_from_java_signature convert_from_java =
     reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
+
   jmethodID jconstructor = env->GetMethodID(jmessage_class, "<init>", "()V");
   jobject jmsg = env->NewObject(jmessage_class, jconstructor);
 
@@ -192,7 +199,6 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
 
   jmethodID jto_mid = env->GetStaticMethodID(jmessage_class, "getToJavaConverter", "()J");
   jlong jto_java_converter = env->CallStaticLongMethod(jmessage_class, jto_mid);
-
   convert_to_java_signature convert_to_java =
     reinterpret_cast<convert_to_java_signature>(jto_java_converter);
 
@@ -250,7 +256,7 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeTake(
     return nullptr;
   }
 
-  if (infos[0].valid_data) {
+  if ((rc > 0) && (infos[0].valid_data)) {
     jobject jtaken_msg = convert_to_java(taken_msg, nullptr);
     destroy_message(taken_msg);
     return jtaken_msg;
