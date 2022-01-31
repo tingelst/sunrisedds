@@ -26,26 +26,27 @@ public class DomainParticipant extends Entity {
         super(handle);
     }
 
-    public Publisher createPublisher() {
+    public Publisher createPublisher() throws DDSException {
         int publisherHandle = SunriseDDS.nativeCreatePublisherHandle(this.getHandle());
         // TODO(Lars): Check ret code and throw exception
         Publisher publisher = new Publisher(publisherHandle);
         return publisher;
     }
 
-    public Subscriber createSubscriber() {
+    public Subscriber createSubscriber() throws DDSException {
         int subscriberHandle = SunriseDDS.nativeCreateSubscriberHandle(this.getHandle());
         Subscriber subscriber = new Subscriber(subscriberHandle);
         return subscriber;
     }
 
-    public <T extends MessageDefinition> Topic<T> createTopic(final Class<T> messageType, final String topicName) {
+    public <T extends MessageDefinition> Topic<T> createTopic(final Class<T> messageType, final String topicName)
+            throws DDSException {
         int topicHandle = SunriseDDS.nativeCreateTopicHandle(this.getHandle(), messageType, topicName);
         Topic<T> topic = new Topic<>(topicHandle, messageType, topicName);
         return topic;
     }
 
-    public WaitSet createWaitSet() {
+    public WaitSet createWaitSet() throws DDSException {
         int waitSetHandle = SunriseDDS.nativeCreateWaitSetHandle(this.getHandle());
         WaitSet waitSet = new WaitSet(waitSetHandle);
         return waitSet;

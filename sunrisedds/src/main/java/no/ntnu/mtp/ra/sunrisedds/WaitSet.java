@@ -24,11 +24,11 @@ public class WaitSet extends Entity {
         super(handle);
     }
 
-    public void attach(Entity entity) {
+    public void attach(Entity entity) throws DDSException {
         SunriseDDS.nativeWaitSetAttach(this.getHandle(), entity.getHandle());
     }
 
-    public int wait(Duration reltimeout) {
+    public int wait(Duration reltimeout) throws DDSException {
         return SunriseDDS.nativeWaitSetWait(this.getHandle(), reltimeout.getNanoseconds());
     }
 

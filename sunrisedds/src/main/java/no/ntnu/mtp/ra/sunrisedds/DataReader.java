@@ -24,15 +24,18 @@ public class DataReader<T extends MessageDefinition> extends Entity {
 
   private Topic<T> topic;
 
-  private boolean dataAvailable = false;
-
   protected DataReader(final int handle, final Topic<T> topic) {
     super(handle);
     this.topic = topic;
   }
 
-  public T read() {
-    T message = SunriseDDS.nativeRead(this.getHandle(), topic.getMessageType());
+  public T read() throws DDSException {
+    T message = SunriseDDS.nativeRead(this.getHandle(), this.topic.getMessageType());
+    return message;
+  }
+
+  public T take() throws DDSException {
+    T message = SunriseDDS.nativeTake(this.getHandle(), this.topic.getMessageType());
     return message;
   }
 

@@ -26,7 +26,7 @@ public class Subscriber extends Entity {
         super(handle);
     }
 
-    public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic) {
+    public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic) throws DDSException {
         int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle());
         return new DataReader<T>(dataReaderHandle, topic);
     }

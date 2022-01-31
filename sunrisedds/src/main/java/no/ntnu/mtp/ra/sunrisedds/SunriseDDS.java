@@ -38,29 +38,36 @@ public class SunriseDDS {
         return new DomainParticipant(handle);
     }
 
-    protected static native int nativeCreateDomainParticipantHandle();
+    protected static native int nativeCreateDomainParticipantHandle() throws DDSException;
 
-    protected static native int nativeCreatePublisherHandle(int domainParticipantHandle);
+    protected static native int nativeCreatePublisherHandle(int domainParticipantHandle) throws DDSException;
 
-    protected static native int nativeCreateSubscriberHandle(int domainParticipantHandle);
+    protected static native int nativeCreateSubscriberHandle(int domainParticipantHandle) throws DDSException;
 
     protected static native <T extends MessageDefinition> int nativeCreateTopicHandle(int domainParticipantHandle,
-            Class<T> messageType, String topicName);
+            Class<T> messageType, String topicName) throws DDSException;
 
-    protected static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle);
+    protected static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle)
+            throws DDSException;
 
-    protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle);
+    protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle)
+            throws DDSException;
 
-    protected static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
+    protected static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message)
+            throws DDSException;
 
-    protected static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass);
+    protected static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass)
+            throws DDSException;
+
+    protected static native <T extends MessageDefinition> T nativeTake(int readerOrConditionHandle,
+            Class<T> messageClass) throws DDSException;
 
     protected static native void nativeAddOnDataAvailableCallback(int readerHandle,
             OnDataAvailableCallbackInterface callback);
 
-    protected static native int nativeCreateWaitSetHandle(int domainParticipantHandle);
+    protected static native int nativeCreateWaitSetHandle(int domainParticipantHandle) throws DDSException;
 
-    protected static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle);
+    protected static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle) throws DDSException;
 
-    protected static native int nativeWaitSetWait(int waitSetHandle, long timeout);
+    protected static native int nativeWaitSetWait(int waitSetHandle, long timeout) throws DDSException;
 }

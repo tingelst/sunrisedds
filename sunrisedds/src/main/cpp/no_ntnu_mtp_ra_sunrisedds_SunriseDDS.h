@@ -73,6 +73,14 @@ JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead
 
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeTake
+ * Signature: (ILjava/lang/Class;)Lno/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition;
+ */
+JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeTake
+  (JNIEnv *, jclass, jint, jclass);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
  * Method:    nativeAddOnDataAvailableCallback
  * Signature: (ILno/ntnu/mtp/ra/sunrisedds/msg/OnDataAvailableCallbackInterface;)V
  */

@@ -28,7 +28,7 @@ public class DataWriter<T extends MessageDefinition> extends Entity {
     this.topic = topic;
   }
 
-  public void write(T message) {
+  public void write(T message) throws DDSException {
     SunriseDDS.nativeWrite(this.getHandle(), message);
   }
 

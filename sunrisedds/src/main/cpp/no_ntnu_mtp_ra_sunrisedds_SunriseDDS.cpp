@@ -209,6 +209,57 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
   return jtaken_msg;
 }
 
+JNIEXPORT jobject JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeTake(
+  JNIEnv * env, jclass cls, jint jreader_or_condition, jclass jmessage_class)
+{
+  (void)cls;
+
+  dds_entity_t reader_or_condition = static_cast<dds_entity_t>(jreader_or_condition);
+  jmethodID jfrom_mid = env->GetStaticMethodID(jmessage_class, "getFromJavaConverter", "()J");
+  jlong jfrom_java_converter = env->CallStaticLongMethod(jmessage_class, jfrom_mid);
+  convert_from_java_signature convert_from_java =
+    reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
+
+  jmethodID jto_mid = env->GetStaticMethodID(jmessage_class, "getToJavaConverter", "()J");
+  jlong jto_java_converter = env->CallStaticLongMethod(jmessage_class, jto_mid);
+  convert_to_java_signature convert_to_java =
+    reinterpret_cast<convert_to_java_signature>(jto_java_converter);
+
+  jmethodID jdestructor_mid = env->GetStaticMethodID(jmessage_class, "getDestructor", "()J");
+  jlong jdestructor_handle = env->CallStaticLongMethod(jmessage_class, jdestructor_mid);
+  destroy_message_signature destroy_message =
+    reinterpret_cast<destroy_message_signature>(jdestructor_handle);
+
+  jmethodID jconstructor = env->GetMethodID(jmessage_class, "<init>", "()V");
+  jobject jmsg = env->NewObject(jmessage_class, jconstructor);
+
+  void * taken_msg = convert_from_java(jmsg, nullptr);
+
+  void * samples[MAX_SAMPLES];
+  dds_sample_info_t infos[MAX_SAMPLES];
+  dds_return_t rc;
+
+  samples[0] = taken_msg;
+
+  rc = dds_take(reader_or_condition, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
+  if (rc < 0) {
+    destroy_message(taken_msg);
+    std::string error_message = std::string{"dds_take: "} + std::string{dds_strretcode(-rc)};
+    sunrisedds_throw_exception(env, error_message);
+    return nullptr;
+  }
+
+  if (infos[0].valid_data) {
+    jobject jtaken_msg = convert_to_java(taken_msg, nullptr);
+    destroy_message(taken_msg);
+    return jtaken_msg;
+  }
+
+  destroy_message(taken_msg);
+  return nullptr;
+}
+
 JNIEXPORT void JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeAddOnDataAvailableCallback(
   JNIEnv * env, jclass cls, jint jreader, jobject callback)

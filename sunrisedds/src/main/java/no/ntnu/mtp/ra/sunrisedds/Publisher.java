@@ -26,7 +26,7 @@ public class Publisher extends Entity {
         super(handle);
     }
 
-    public <T extends MessageDefinition> DataWriter<T> createDataWriter(Topic<T> topic) {
+    public <T extends MessageDefinition> DataWriter<T> createDataWriter(Topic<T> topic) throws DDSException {
         int dataWriterHandle = SunriseDDS.nativeCreateDataWriterHandle(this.getHandle(), topic.getHandle());
         return new DataWriter<T>(dataWriterHandle, topic);
     }
