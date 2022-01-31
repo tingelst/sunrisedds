@@ -253,7 +253,7 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait(
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_duration_t reltimeout = static_cast<dds_duration_t>(jreltimeout);
   dds_return_t ret = dds_waitset_wait(waitset, NULL, 0, reltimeout);
-  if (ret != DDS_RETCODE_OK) {
+  if (ret < 0) {
     std::string error_message =
       std::string{"dds_waitset_wait: "} + std::string{dds_strretcode(-ret)};
     return sunrisedds_throw_exception(env, error_message);
