@@ -320,6 +320,26 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait(
 }
 
 JNIEXPORT jint JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateReadCondition(
+  JNIEnv * env, jclass cls, jint jreader, jint jmask)
+{
+  (void)env;
+  (void)cls;
+
+  dds_entity_t reader = static_cast<dds_entity_t>(jreader);
+  uint32_t mask = static_cast<uint32_t>(jmask);
+
+  dds_entity_t rc = dds_create_readcondition(reader, mask);
+  if (rc < 0) {
+    std::string error_message =
+      std::string{"dds_create_readcondition: "} + std::string{dds_strretcode(-rc)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
+  jint jrc = static_cast<jint>(rc);
+  return jrc;
+}
+
+JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM * vm, void *)
 {
   // Can only call this once

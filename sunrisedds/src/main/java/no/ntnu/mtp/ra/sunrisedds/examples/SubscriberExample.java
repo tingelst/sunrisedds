@@ -20,6 +20,7 @@ import no.ntnu.mtp.ra.sunrisedds.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.DataReader;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Duration;
+import no.ntnu.mtp.ra.sunrisedds.ReadCondition;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.Topic;
@@ -36,13 +37,17 @@ public class SubscriberExample {
             Subscriber subscriber = participant.createSubscriber();
             Topic<JointState> topic = participant.createTopic(JointState.class, "rt/joint_states");
             DataReader<JointState> reader = subscriber.createDataReader(topic);
+
+            ReadCondition readCondition = reader.createReadCondition(256);
+
             WaitSet waitSet = participant.createWaitSet();
-            waitSet.attach(reader);
+            // waitSet.attach(reader);
+            waitSet.attach(readCondition);
+            waitSet.wait(Duration.infinity());
 
             JointState message = null;
             int i = 0;
             while (message == null) {
-                waitSet.wait(Duration.infinity());
                 message = reader.take();
                 i++;
             }

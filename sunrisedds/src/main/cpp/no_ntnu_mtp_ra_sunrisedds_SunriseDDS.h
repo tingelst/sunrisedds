@@ -111,6 +111,14 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAt
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait
   (JNIEnv *, jclass, jint, jlong);
 
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateReadCondition
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateReadCondition
+  (JNIEnv *, jclass, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

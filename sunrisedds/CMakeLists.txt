@@ -99,6 +99,7 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataReader.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/WaitSet.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/Duration.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/ReadCondition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/DDSException.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"

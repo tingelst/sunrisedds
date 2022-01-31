@@ -39,6 +39,11 @@ public class DataReader<T extends MessageDefinition> extends Entity {
     return message;
   }
 
+  public ReadCondition createReadCondition(int mask) throws DDSException {
+    int readConditionhandle = SunriseDDS.nativeCreateReadCondition(this.getHandle(), mask);
+    return new ReadCondition(readConditionhandle, mask);
+  }
+
   public void addOnDataAvailableCallback(OnDataAvailableCallbackInterface callback) {
     SunriseDDS.nativeAddOnDataAvailableCallback(this.getHandle(), callback);
   }

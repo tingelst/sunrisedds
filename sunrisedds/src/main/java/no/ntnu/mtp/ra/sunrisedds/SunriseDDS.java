@@ -70,4 +70,6 @@ public class SunriseDDS {
     protected static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle) throws DDSException;
 
     protected static native int nativeWaitSetWait(int waitSetHandle, long timeout) throws DDSException;
+
+    protected static native int nativeCreateReadCondition(int readerHandle, int mask) throws DDSException;
 }
