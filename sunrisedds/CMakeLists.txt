@@ -143,7 +143,7 @@ set("${PROJECT_NAME}_msg_sources"
 
 set("${PROJECT_NAME}_sources"
   "src/main/cpp/sunrisedds_converters.cpp"
-  "src/main/cpp/exceptions.cpp"
+  "src/main/cpp/sunrisedds_exceptions.cpp"
 )
 
 

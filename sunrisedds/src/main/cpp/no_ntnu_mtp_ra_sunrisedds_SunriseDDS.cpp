@@ -14,8 +14,8 @@
 #include <dds/dds.h>
 
 #include "no_ntnu_mtp_ra_sunrisedds_SunriseDDS.h"
+#include "sunrisedds_exceptions.h"
 #include "sunrisedds_signatures.h"
-#include "exceptions.hpp"
 
 JavaVM * g_vm = nullptr;
 jobject g_on_data_available_callback;
@@ -29,7 +29,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDomainParticipantHandle(
   (void)env;
   (void)cls;
   dds_entity_t participant = dds_create_participant(DDS_DOMAIN_DEFAULT, NULL, NULL);
-  sunrisedds_throw_exception(env, -2);
+  if (participant < 0) {
+    std::string error_message =
+      std::string{"dds_create_participant: "} + std::string{dds_strretcode(-participant)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   return static_cast<jint>(participant);
 }
 
@@ -41,6 +45,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreatePublisherHandle(
   (void)cls;
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t publisher = dds_create_publisher(participant, NULL, NULL);
+  if (publisher < 0) {
+    std::string error_message =
+      std::string{"dds_create_publisher: "} + std::string{dds_strretcode(-publisher)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jpublisher = static_cast<jint>(publisher);
   return jpublisher;
 }
@@ -53,6 +62,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateSubscriberHandle(
   (void)cls;
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t subscriber = dds_create_subscriber(participant, NULL, NULL);
+  if (subscriber < 0) {
+    std::string error_message =
+      std::string{"dds_create_subscriber: "} + std::string{dds_strretcode(-subscriber)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jsubscriber = static_cast<jint>(subscriber);
   return jsubscriber;
 }
@@ -73,6 +87,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateTopicHandle(
   dds_topic_descriptor_t * td = reinterpret_cast<dds_topic_descriptor_t *>(jtopic_descriptor);
 
   dds_entity_t topic = dds_create_topic(participant, td, topic_name, NULL, NULL);
+  if (topic < 0) {
+    std::string error_message =
+      std::string{"dds_create_topic: "} + std::string{dds_strretcode(-topic)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
 
   env->ReleaseStringUTFChars(jtopic_name, topic_name);
 
@@ -89,6 +108,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataWriterHandle(
   dds_entity_t participant_or_publisher = static_cast<dds_entity_t>(jparticipant_or_publisher);
   dds_entity_t topic = static_cast<dds_entity_t>(jtopic);
   dds_entity_t writer = dds_create_writer(participant_or_publisher, topic, NULL, NULL);
+  if (writer < 0) {
+    std::string error_message =
+      std::string{"dds_create_writer: "} + std::string{dds_strretcode(-writer)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jwriter = static_cast<jint>(writer);
   return jwriter;
 }
@@ -102,6 +126,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
   dds_entity_t participant_or_subscriber = static_cast<dds_entity_t>(jparticipant_or_subscriber);
   dds_entity_t topic = static_cast<dds_entity_t>(jtopic);
   dds_entity_t reader = dds_create_reader(participant_or_subscriber, topic, NULL, NULL);
+  if (reader < 0) {
+    std::string error_message =
+      std::string{"dds_create_reader: "} + std::string{dds_strretcode(-reader)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jreader = static_cast<jint>(reader);
   return jreader;
 }
@@ -118,7 +147,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWrite(
   convert_from_java_signature convert_from_java =
     reinterpret_cast<convert_from_java_signature>(jfrom_java_converter);
   void * msg = convert_from_java(jmessage, nullptr);
-  dds_write(writer, msg);
+  dds_return_t ret = dds_write(writer, msg);
+  if (ret != DDS_RETCODE_OK) {
+    std::string error_message = std::string{"dds_write: "} + std::string{dds_strretcode(-ret)};
+    sunrisedds_throw_exception(env, error_message);
+  }
 }
 
 #define MAX_SAMPLES 1
@@ -145,7 +178,9 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeRead(
   samples[0] = taken_msg;
 
   while (true) {
-    rc = dds_read(reader, samples, infos, MAX_SAMPLES, MAX_SAMPLES);
+    rc = dds_read(
+      reader, samples, infos, MAX_SAMPLES,
+      MAX_SAMPLES);  // TODO(tingelst): Make non-blocking and throw
     if ((rc > 0) && (infos[0].valid_data)) {
       break;
     } else {
@@ -186,6 +221,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateWaitSetHandle(
 {
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t waitset = dds_create_waitset(participant);
+  if (waitset < 0) {
+    std::string error_message =
+      std::string{"dds_create_waitset: "} + std::string{dds_strretcode(-waitset)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jwaitset = static_cast<jint>(waitset);
   return jwaitset;
 }
@@ -197,6 +237,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAttach(
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_entity_t entity = static_cast<dds_entity_t>(jentity);
   dds_return_t ret = dds_waitset_attach(waitset, entity, 0);
+  if (ret != DDS_RETCODE_OK) {
+    std::string error_message =
+      std::string{"dds_waitset_attach: "} + std::string{dds_strretcode(-ret)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jret = static_cast<jint>(ret);
   return jret;
 }
@@ -208,6 +253,11 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait(
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_duration_t reltimeout = static_cast<dds_duration_t>(jreltimeout);
   dds_return_t ret = dds_waitset_wait(waitset, NULL, 0, reltimeout);
+  if (ret != DDS_RETCODE_OK) {
+    std::string error_message =
+      std::string{"dds_waitset_wait: "} + std::string{dds_strretcode(-ret)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
   jint jret = static_cast<jint>(ret);
   return jret;
 }

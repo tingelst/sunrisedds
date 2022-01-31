@@ -13,6 +13,10 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds.examples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import no.ntnu.mtp.ra.sunrisedds.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.DataWriter;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Publisher;
@@ -21,13 +25,14 @@ import no.ntnu.mtp.ra.sunrisedds.Topic;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 
 public class JointStatePublisher {
+    private static final Logger logger = LoggerFactory.getLogger(JointStatePublisher.class);
 
     private DomainParticipant participant;
     private Publisher publisher;
     private Topic<JointState> topic;
     private DataWriter<JointState> writer;
 
-    public JointStatePublisher(String topicName) {
+    public JointStatePublisher(String topicName) throws DDSException {
         this.participant = SunriseDDS.createDomainParticipant();
         this.publisher = this.participant.createPublisher();
         this.topic = this.participant.createTopic(JointState.class, topicName);
@@ -39,43 +44,49 @@ public class JointStatePublisher {
     }
 
     public static void main(String[] args) {
-        String topicName = "rt/joint_states";
-        JointStatePublisher jointStatePublisher = new JointStatePublisher(topicName);
+        try {
 
-        JointState message = new JointState();
+            String topicName = "rt/joint_states";
+            JointStatePublisher jointStatePublisher = new JointStatePublisher(topicName);
 
-        message.getHeader().getStamp().setSec(1);
-        message.getHeader().getStamp().setNanosec(2);
-        message.getHeader().setFrameId("frameId");
+            JointState message = new JointState();
 
-        message.getName().add("joint_1");
-        message.getName().add("joint_2");
-        message.getName().add("joint_3");
-        message.getName().add("joint_4");
-        message.getName().add("joint_5");
-        message.getName().add("joint_6");
+            message.getHeader().getStamp().setSec(1);
+            message.getHeader().getStamp().setNanosec(2);
+            message.getHeader().setFrameId("frameId");
 
-        message.getPosition().add(1.0);
-        message.getPosition().add(2.0);
-        message.getPosition().add(3.0);
-        message.getPosition().add(4.0);
-        message.getPosition().add(5.0);
-        message.getPosition().add(6.0);
+            message.getName().add("joint_1");
+            message.getName().add("joint_2");
+            message.getName().add("joint_3");
+            message.getName().add("joint_4");
+            message.getName().add("joint_5");
+            message.getName().add("joint_6");
 
-        message.getVelocity().add(1.0);
-        message.getVelocity().add(2.0);
-        message.getVelocity().add(3.0);
-        message.getVelocity().add(4.0);
-        message.getVelocity().add(5.0);
-        message.getVelocity().add(6.0);
+            message.getPosition().add(1.0);
+            message.getPosition().add(2.0);
+            message.getPosition().add(3.0);
+            message.getPosition().add(4.0);
+            message.getPosition().add(5.0);
+            message.getPosition().add(6.0);
 
-        message.getEffort().add(1.0);
-        message.getEffort().add(2.0);
-        message.getEffort().add(3.0);
-        message.getEffort().add(4.0);
-        message.getEffort().add(5.0);
-        message.getEffort().add(6.0);
+            message.getVelocity().add(1.0);
+            message.getVelocity().add(2.0);
+            message.getVelocity().add(3.0);
+            message.getVelocity().add(4.0);
+            message.getVelocity().add(5.0);
+            message.getVelocity().add(6.0);
 
-        jointStatePublisher.publish(message);
+            message.getEffort().add(1.0);
+            message.getEffort().add(2.0);
+            message.getEffort().add(3.0);
+            message.getEffort().add(4.0);
+            message.getEffort().add(5.0);
+            message.getEffort().add(6.0);
+
+            jointStatePublisher.publish(message);
+        } catch (DDSException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

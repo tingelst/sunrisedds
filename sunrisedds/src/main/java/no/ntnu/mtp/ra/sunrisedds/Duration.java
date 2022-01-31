@@ -1,6 +1,5 @@
 package no.ntnu.mtp.ra.sunrisedds;
 
-import java.net.ProtocolException;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -10,28 +9,35 @@ public class Duration {
 
     private static final Logger logger = LoggerFactory.getLogger(Duration.class);
 
-    public static final long INFINITY = Long.MAX_VALUE;
+    private static final long INFINITY = Long.MAX_VALUE;
 
-    private long seconds = 0;
     private long nanoseconds = 0;
 
     public Duration(long seconds, long nanoseconds) {
-        this.seconds = seconds;
-        this.nanoseconds = nanoseconds;
+        this.nanoseconds = TimeUnit.SECONDS.toNanos(seconds) + nanoseconds;
     }
 
     public long getSeconds() {
-        return this.seconds + TimeUnit.NANOSECONDS.toSeconds(this.nanoseconds);
+        return TimeUnit.NANOSECONDS.toSeconds(this.nanoseconds);
     }
 
     public long getNanoseconds() {
-        return TimeUnit.SECONDS.toNanos(this.seconds) + this.nanoseconds;
+        return this.nanoseconds;
     }
 
     public static void main(String[] args) {
-        Duration d = new Duration(1,1000000000);
+        Duration d = new Duration(1, 1000000000);
 
         logger.info(String.valueOf(d.getSeconds()));
+    }
+
+    public static Duration infinity() {
+        return new Duration(0, INFINITY);
+    }
+
+
+    public static Duration zero() {
+        return new Duration(0, 0);
     }
 
 }

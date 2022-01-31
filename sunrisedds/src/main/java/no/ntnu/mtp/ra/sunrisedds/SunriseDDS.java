@@ -13,6 +13,8 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds;
 
+import java.security.ProtectionDomain;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,16 +53,16 @@ public class SunriseDDS {
 
     protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle);
 
-    public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
+    protected static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message);
 
-    public static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass);
+    protected static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass);
 
-    public static native void nativeAddOnDataAvailableCallback(int readerHandle,
+    protected static native void nativeAddOnDataAvailableCallback(int readerHandle,
             OnDataAvailableCallbackInterface callback);
 
-    public static native int nativeCreateWaitSetHandle(int domainParticipantHandle);
+    protected static native int nativeCreateWaitSetHandle(int domainParticipantHandle);
 
-    public static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle);
+    protected static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle);
 
-    public static native int nativeWaitSetWait(int waitSetHandle, long timeout);
+    protected static native int nativeWaitSetWait(int waitSetHandle, long timeout);
 }
