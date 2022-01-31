@@ -276,6 +276,7 @@ JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateWaitSetHandle(
   JNIEnv * env, jclass cls, jint jparticipant)
 {
+  (void)cls;
   dds_entity_t participant = static_cast<dds_entity_t>(jparticipant);
   dds_entity_t waitset = dds_create_waitset(participant);
   if (waitset < 0) {
@@ -291,6 +292,7 @@ JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetAttach(
   JNIEnv * env, jclass cls, jint jwaitset, jint jentity)
 {
+  (void)cls;
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_entity_t entity = static_cast<dds_entity_t>(jentity);
   dds_return_t ret = dds_waitset_attach(waitset, entity, 0);
@@ -307,6 +309,7 @@ JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWait(
   JNIEnv * env, jclass cls, jint jwaitset, jlong jreltimeout)
 {
+  (void)cls;
   dds_entity_t waitset = static_cast<dds_entity_t>(jwaitset);
   dds_duration_t reltimeout = static_cast<dds_duration_t>(jreltimeout);
   dds_return_t ret = dds_waitset_wait(waitset, NULL, 0, reltimeout);
