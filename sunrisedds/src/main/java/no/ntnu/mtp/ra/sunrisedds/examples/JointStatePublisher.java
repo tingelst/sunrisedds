@@ -39,7 +39,7 @@ public class JointStatePublisher {
         this.writer = this.publisher.createDataWriter(topic);
     }
 
-    public void publish(JointState message) {
+    public void publish(JointState message) throws DDSException {
         this.writer.write(message);
     }
 

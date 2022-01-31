@@ -13,6 +13,10 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,5 +34,46 @@ public class Subscriber extends Entity {
         int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle());
         return new DataReader<T>(dataReaderHandle, topic);
     }
+
+    public DataState createDataState() {
+        return new DataState();
+    }
+
+    public class DataState {
+
+        private Set<SampleState> sampleStates = new HashSet<SampleState>();
+        private Set<ViewState> viewStates = new HashSet<ViewState>();
+        private Set<InstanceState> instanceStates = new HashSet<InstanceState>();
+
+        public DataState with(SampleState sampleState) {
+            this.sampleStates.add(sampleState);
+            return this;
+        }
+
+        public DataState with(ViewState viewState) {
+            this.viewStates.add(viewState);
+            return this;
+        }
+
+        public DataState with(InstanceState instanceState) {
+            this.instanceStates.add(instanceState);
+            return this;
+        }
+
+        public DataState withAnySampleState() {
+            return this.with(SampleState.NOT_READ).with(SampleState.READ);
+        }
+
+        public int getValue() {
+            int value = 0;
+            Iterator<SampleState> sampleStateIterator = sampleStates.iterator();
+            while (sampleStateIterator.hasNext()) {
+                value |= sampleStateIterator.next().getValue();
+            }
+            return value;
+        }
+
+    }
+
 
 }

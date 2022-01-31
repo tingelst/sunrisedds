@@ -286,6 +286,8 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateWaitSetHandle(
   }
   jint jwaitset = static_cast<jint>(waitset);
   return jwaitset;
+
+  DDS_DATA_AVAILABLE_STATUS
 }
 
 JNIEXPORT jint JNICALL

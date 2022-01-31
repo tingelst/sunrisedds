@@ -21,10 +21,12 @@ import no.ntnu.mtp.ra.sunrisedds.DataReader;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Duration;
 import no.ntnu.mtp.ra.sunrisedds.ReadCondition;
+import no.ntnu.mtp.ra.sunrisedds.SampleState;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.Topic;
 import no.ntnu.mtp.ra.sunrisedds.WaitSet;
+import no.ntnu.mtp.ra.sunrisedds.Subscriber.DataState;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 
 public class SubscriberExample {
@@ -38,7 +40,14 @@ public class SubscriberExample {
             Topic<JointState> topic = participant.createTopic(JointState.class, "rt/joint_states");
             DataReader<JointState> reader = subscriber.createDataReader(topic);
 
-            ReadCondition readCondition = reader.createReadCondition(256);
+            DataState ds = subscriber.createDataState();
+            ds.withAnySampleState();
+
+            logger.info(String.valueOf(ds.getValue()));
+
+
+
+            ReadCondition<JointState> readCondition = reader.createReadCondition(SampleState.NOT_READ);
 
             WaitSet waitSet = participant.createWaitSet();
             // waitSet.attach(reader);

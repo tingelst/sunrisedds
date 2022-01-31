@@ -13,6 +13,8 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds;
 
+import javax.swing.SpinnerDateModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +41,9 @@ public class DataReader<T extends MessageDefinition> extends Entity {
     return message;
   }
 
-  public ReadCondition createReadCondition(int mask) throws DDSException {
-    int readConditionhandle = SunriseDDS.nativeCreateReadCondition(this.getHandle(), mask);
-    return new ReadCondition(readConditionhandle, mask);
+  public ReadCondition createReadCondition(SampleState sampleState) throws DDSException {
+    int readConditionhandle = SunriseDDS.nativeCreateReadCondition(this.getHandle(), sampleState.getValue());
+    return new ReadCondition(readConditionhandle, sampleState.getValue());
   }
 
   public void addOnDataAvailableCallback(OnDataAvailableCallbackInterface callback) {

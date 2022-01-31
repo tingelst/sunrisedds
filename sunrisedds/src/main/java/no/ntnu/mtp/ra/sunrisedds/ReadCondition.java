@@ -16,7 +16,9 @@ package no.ntnu.mtp.ra.sunrisedds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReadCondition extends Entity {
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+
+public class ReadCondition <T extends MessageDefinition> extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(DataReader.class);
 
