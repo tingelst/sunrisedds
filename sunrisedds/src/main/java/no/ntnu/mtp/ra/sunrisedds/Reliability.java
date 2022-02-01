@@ -1,7 +1,5 @@
 package no.ntnu.mtp.ra.sunrisedds;
 
-import javax.management.relation.Relation;
-
 public class Reliability {
 
     private final Kind kind;
