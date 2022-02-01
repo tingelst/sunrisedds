@@ -50,10 +50,10 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDat
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
  * Method:    nativeCreateDataReaderHandle
- * Signature: (II)I
+ * Signature: (IIJ)I
  */
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle
-  (JNIEnv *, jclass, jint, jint);
+  (JNIEnv *, jclass, jint, jint, jlong);
 
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
@@ -118,6 +118,30 @@ JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeWaitSetWa
  */
 JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateReadCondition
   (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeCreateQosHandle
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateQosHandle
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeDeleteQosHandle
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDeleteQosHandle
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeSetQosReliability
+ * Signature: (JIJ)J
+ */
+JNIEXPORT jlong JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeSetQosReliability
+  (JNIEnv *, jclass, jlong, jint, jlong);
 
 #ifdef __cplusplus
 }

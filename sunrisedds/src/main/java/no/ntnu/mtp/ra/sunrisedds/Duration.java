@@ -13,6 +13,10 @@ public class Duration {
 
     private long nanoseconds = 0;
 
+    public Duration(long duration, TimeUnit unit) {
+        this.nanoseconds = unit.toNanos(duration);
+    }
+
     public Duration(long seconds, long nanoseconds) {
         this.nanoseconds = TimeUnit.SECONDS.toNanos(seconds) + nanoseconds;
     }

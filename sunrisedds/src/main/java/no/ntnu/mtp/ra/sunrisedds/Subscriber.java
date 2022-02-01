@@ -30,8 +30,11 @@ public class Subscriber extends Entity {
         super(handle);
     }
 
-    public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic) throws DDSException {
-        int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle());
+    public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic, QosPolicy qos)
+            throws DDSException {
+        int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle(),
+                qos.getHandle());
+        qos.dispose();
         return new DataReader<T>(dataReaderHandle, topic);
     }
 
@@ -64,16 +67,40 @@ public class Subscriber extends Entity {
             return this.with(SampleState.NOT_READ).with(SampleState.READ);
         }
 
+        public DataState withAnyViewState() {
+            return this.with(ViewState.NEW).with(ViewState.NOT_NEW);
+        }
+
+        public DataState withAnyInstanceState() {
+            return this.with(InstanceState.ALIVE).with(InstanceState.NOT_ALIVE_DISPOSED)
+                    .with(InstanceState.NOT_ALIVE_NO_WRITERS);
+        }
+
+        public DataState withNotAliveInstanceStates() {
+            return this.with(InstanceState.NOT_ALIVE_DISPOSED).with(InstanceState.NOT_ALIVE_NO_WRITERS);
+        }
+
+        public DataState withAnyState() {
+            return this.withAnySampleState().withAnyViewState().withAnyInstanceState();
+        }
+
         public int getValue() {
             int value = 0;
             Iterator<SampleState> sampleStateIterator = sampleStates.iterator();
             while (sampleStateIterator.hasNext()) {
                 value |= sampleStateIterator.next().getValue();
             }
+            Iterator<ViewState> viewStateIterator = viewStates.iterator();
+            while (viewStateIterator.hasNext()) {
+                value |= viewStateIterator.next().getValue();
+            }
+            Iterator<InstanceState> instanceStateIterator = instanceStates.iterator();
+            while (instanceStateIterator.hasNext()) {
+                value |= instanceStateIterator.next().getValue();
+            }
             return value;
         }
 
     }
-
 
 }

@@ -28,7 +28,7 @@ public class WaitSet extends Entity {
         SunriseDDS.nativeWaitSetAttach(this.getHandle(), entity.getHandle());
     }
 
-    public int wait(Duration reltimeout) throws DDSException {
+    public int waitForConditions(Duration reltimeout) throws DDSException {
         return SunriseDDS.nativeWaitSetWait(this.getHandle(), reltimeout.getNanoseconds());
     }
 

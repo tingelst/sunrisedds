@@ -20,6 +20,7 @@ import no.ntnu.mtp.ra.sunrisedds.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.DataReader;
 import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.Duration;
+import no.ntnu.mtp.ra.sunrisedds.QosPolicy;
 import no.ntnu.mtp.ra.sunrisedds.ReadCondition;
 import no.ntnu.mtp.ra.sunrisedds.SampleState;
 import no.ntnu.mtp.ra.sunrisedds.Subscriber;
@@ -38,21 +39,24 @@ public class SubscriberExample {
             DomainParticipant participant = SunriseDDS.createDomainParticipant();
             Subscriber subscriber = participant.createSubscriber();
             Topic<JointState> topic = participant.createTopic(JointState.class, "rt/joint_states");
-            DataReader<JointState> reader = subscriber.createDataReader(topic);
+
+
+            QosPolicy qos = SunriseDDS.createQoSPolicy();
+            qos.setReliability(SunriseDDS.createReliability());
+
+            DataReader<JointState> reader = subscriber.createDataReader(topic, qos);
 
             DataState ds = subscriber.createDataState();
-            ds.withAnySampleState();
+            ds.withAnyInstanceState();
 
             logger.info(String.valueOf(ds.getValue()));
 
-
-
-            ReadCondition<JointState> readCondition = reader.createReadCondition(SampleState.NOT_READ);
+            ReadCondition<JointState> readCondition = reader.createReadCondition(ds);
 
             WaitSet waitSet = participant.createWaitSet();
             // waitSet.attach(reader);
             waitSet.attach(readCondition);
-            waitSet.wait(Duration.infinity());
+            waitSet.waitForConditions(Duration.infinity());
 
             JointState message = null;
             int i = 0;

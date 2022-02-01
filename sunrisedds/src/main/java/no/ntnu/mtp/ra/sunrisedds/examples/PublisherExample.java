@@ -45,7 +45,7 @@ public class PublisherExample {
             waitSet.attach(writer);
 
             logger.info("Waiting for reader!");
-            waitSet.wait(Duration.infinity());
+            waitSet.waitForConditions(Duration.infinity());
 
             JointState message = new JointState();
             Header header = new Header();

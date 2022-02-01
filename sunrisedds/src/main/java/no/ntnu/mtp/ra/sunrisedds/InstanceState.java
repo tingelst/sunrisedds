@@ -6,7 +6,7 @@ public enum InstanceState {
     NOT_ALIVE_DISPOSED(32),
     NOT_ALIVE_NO_WRITERS(64);
 
-    public final int value;
+    private final int value;
 
     public int getValue() {
         return this.value;

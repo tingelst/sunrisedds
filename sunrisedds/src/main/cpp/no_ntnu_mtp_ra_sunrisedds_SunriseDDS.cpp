@@ -119,15 +119,14 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataWriterHandle(
 
 JNIEXPORT jint JNICALL
 Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
-  JNIEnv * env, jclass cls, jint jparticipant_or_subscriber, jint jtopic)
+  JNIEnv * env, jclass cls, jint jparticipant_or_subscriber, jint jtopic, jlong jqos)
 {
   (void)env;
   (void)cls;
   dds_entity_t participant_or_subscriber = static_cast<dds_entity_t>(jparticipant_or_subscriber);
   dds_entity_t topic = static_cast<dds_entity_t>(jtopic);
+  dds_qos_t * qos = reinterpret_cast<dds_qos_t*>(jqos);
 
-  dds_qos_t * qos = dds_create_qos();
-  dds_qset_reliability(qos, DDS_RELIABILITY_RELIABLE, DDS_SECS(10));
   dds_entity_t reader = dds_create_reader(participant_or_subscriber, topic, qos, NULL);
 
   if (reader < 0) {
@@ -135,7 +134,6 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateDataReaderHandle(
       std::string{"dds_create_reader: "} + std::string{dds_strretcode(-reader)};
     return sunrisedds_throw_exception(env, error_message);
   }
-  dds_delete_qos(qos);
 
   jint jreader = static_cast<jint>(reader);
   return jreader;
@@ -286,8 +284,6 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateWaitSetHandle(
   }
   jint jwaitset = static_cast<jint>(waitset);
   return jwaitset;
-
-  DDS_DATA_AVAILABLE_STATUS
 }
 
 JNIEXPORT jint JNICALL
@@ -342,6 +338,48 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateReadCondition(
   }
   jint jrc = static_cast<jint>(rc);
   return jrc;
+}
+
+JNIEXPORT jlong JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeCreateQosHandle(JNIEnv * env, jclass cls)
+{
+  (void)env;
+  (void)cls;
+  dds_qos_t * qos = dds_create_qos();
+  if (qos == nullptr) {
+    std::string error_message =
+      std::string{"dds_create_qos: Unable to initialize dds_qos_t structure"};
+    return sunrisedds_throw_exception(env, error_message);
+  }
+  jlong ptr = reinterpret_cast<jlong>(qos);
+  return ptr;
+}
+
+JNIEXPORT jlong JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeSetQosReliability(
+  JNIEnv * env, jclass cls, jlong jqos, jint jkind, jlong jmax_blocking_time)
+{
+  (void)env;
+  (void)cls;
+
+  dds_qos_t * qos = reinterpret_cast<dds_qos_t *>(jqos);
+
+  dds_reliability_kind_t kind = static_cast<dds_reliability_kind_t>(jkind);
+  dds_duration_t max_blocking_time = static_cast<dds_duration_t>(jmax_blocking_time);
+
+  dds_qset_reliability(qos, kind, max_blocking_time);
+
+  return reinterpret_cast<jlong>(qos);
+}
+
+JNIEXPORT void JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDeleteQosHandle(
+  JNIEnv * env, jclass cls, jlong jqos)
+{
+  (void)env;
+  (void)cls;
+  dds_qos_t * qos = reinterpret_cast<dds_qos_t *>(jqos);
+  dds_delete_qos(qos);
 }
 
 JNIEXPORT jint JNICALL
