@@ -13,7 +13,6 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds;
 
-import java.net.ProtocolException;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -71,7 +70,8 @@ public class SunriseDDS {
     public static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle)
             throws DDSException;
 
-    public static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle, long qosHandle)
+    public static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle,
+            long qosHandle)
             throws DDSException;
 
     public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message)
@@ -99,6 +99,5 @@ public class SunriseDDS {
     public static native void nativeDeleteQosHandle(long handle);
 
     public static native long nativeSetQosReliability(long qosHandle, int kind, long maxBlockingTime);
-
 
 }

@@ -1,3 +1,4 @@
+// Copyright 2022 Norwegian University of Science and Technology.
 /* Copyright 2016-2018 Esteve Fernandez <esteve@apache.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
