@@ -16,19 +16,19 @@ package no.ntnu.mtp.ra.sunrisedds.examples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.DDSException;
-import no.ntnu.mtp.ra.sunrisedds.DataReader;
-import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
-import no.ntnu.mtp.ra.sunrisedds.Duration;
-import no.ntnu.mtp.ra.sunrisedds.QosPolicy;
-import no.ntnu.mtp.ra.sunrisedds.ReadCondition;
-import no.ntnu.mtp.ra.sunrisedds.SampleState;
-import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
-import no.ntnu.mtp.ra.sunrisedds.Topic;
-import no.ntnu.mtp.ra.sunrisedds.WaitSet;
-import no.ntnu.mtp.ra.sunrisedds.Subscriber.DataState;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Duration;
+import no.ntnu.mtp.ra.sunrisedds.core.WaitSet;
+import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
+import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
+import no.ntnu.mtp.ra.sunrisedds.sub.DataReader;
+import no.ntnu.mtp.ra.sunrisedds.sub.ReadCondition;
+import no.ntnu.mtp.ra.sunrisedds.sub.SampleState;
+import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber;
+import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber.DataState;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class SubscriberExample {
 

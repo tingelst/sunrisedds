@@ -1,4 +1,4 @@
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.core;
 
 import java.util.concurrent.TimeUnit;
 

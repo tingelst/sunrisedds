@@ -16,16 +16,16 @@ package no.ntnu.mtp.ra.sunrisedds.examples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.DDSException;
-import no.ntnu.mtp.ra.sunrisedds.DataWriter;
-import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
-import no.ntnu.mtp.ra.sunrisedds.Duration;
-import no.ntnu.mtp.ra.sunrisedds.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
-import no.ntnu.mtp.ra.sunrisedds.Topic;
-import no.ntnu.mtp.ra.sunrisedds.WaitSet;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Duration;
+import no.ntnu.mtp.ra.sunrisedds.core.WaitSet;
+import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
+import no.ntnu.mtp.ra.sunrisedds.pub.DataWriter;
+import no.ntnu.mtp.ra.sunrisedds.pub.Publisher;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class PublisherExample {
 

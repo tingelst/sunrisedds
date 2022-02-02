@@ -91,21 +91,30 @@ endif()
 
 set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/SunriseDDS.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Entity.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DomainParticipant.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Publisher.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Subscriber.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataWriter.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DataReader.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/WaitSet.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Duration.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/ReadCondition.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/DDSException.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/SampleState.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/ViewState.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/InstanceState.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/QosPolicy.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Reliability.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/policy/QosPolicy.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/policy/Reliability.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/DDSException.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/Duration.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/Entity.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/core/WaitSet.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/domain/DomainParticipant.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/pub/DataWriter.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/pub/Publisher.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/DataReader.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/InstanceState.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/ReadCondition.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/SampleState.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/Subscriber.java"
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/sub/ViewState.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/topic/Topic.java"
+
+  "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
+
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
@@ -113,8 +122,6 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointPosition.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointState.java"
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/OnDataAvailableCallbackInterface.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/Topic.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 )
 
 add_jar("${PROJECT_NAME}_jar"

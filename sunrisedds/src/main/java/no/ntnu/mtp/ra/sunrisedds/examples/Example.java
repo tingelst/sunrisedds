@@ -19,20 +19,20 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.DDSException;
-import no.ntnu.mtp.ra.sunrisedds.DataReader;
-import no.ntnu.mtp.ra.sunrisedds.DataWriter;
-import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
-import no.ntnu.mtp.ra.sunrisedds.Publisher;
-import no.ntnu.mtp.ra.sunrisedds.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
-import no.ntnu.mtp.ra.sunrisedds.Topic;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.msg.Header;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointPosition;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointQuantity;
 import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
+import no.ntnu.mtp.ra.sunrisedds.pub.DataWriter;
+import no.ntnu.mtp.ra.sunrisedds.pub.Publisher;
+import no.ntnu.mtp.ra.sunrisedds.sub.DataReader;
+import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class Example {
 

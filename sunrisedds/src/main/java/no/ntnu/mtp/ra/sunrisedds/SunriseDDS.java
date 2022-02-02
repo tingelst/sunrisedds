@@ -19,6 +19,11 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Duration;
+import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
+import no.ntnu.mtp.ra.sunrisedds.core.policy.Reliability;
+import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
@@ -54,46 +59,46 @@ public class SunriseDDS {
         return new Duration(duration, unit);
     }
 
-    protected static native int nativeCreateDomainParticipantHandle() throws DDSException;
+    public static native int nativeCreateDomainParticipantHandle() throws DDSException;
 
-    protected static native int nativeCreatePublisherHandle(int domainParticipantHandle) throws DDSException;
+    public static native int nativeCreatePublisherHandle(int domainParticipantHandle) throws DDSException;
 
-    protected static native int nativeCreateSubscriberHandle(int domainParticipantHandle) throws DDSException;
+    public static native int nativeCreateSubscriberHandle(int domainParticipantHandle) throws DDSException;
 
-    protected static native <T extends MessageDefinition> int nativeCreateTopicHandle(int domainParticipantHandle,
+    public static native <T extends MessageDefinition> int nativeCreateTopicHandle(int domainParticipantHandle,
             Class<T> messageType, String topicName) throws DDSException;
 
-    protected static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle)
+    public static native int nativeCreateDataWriterHandle(int participantOrPublisherHandle, int topicHandle)
             throws DDSException;
 
-    protected static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle, long qosHandle)
+    public static native int nativeCreateDataReaderHandle(int participantOrSubscriberHandle, int topicHandle, long qosHandle)
             throws DDSException;
 
-    protected static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message)
+    public static native <T extends MessageDefinition> void nativeWrite(int writerHandle, T message)
             throws DDSException;
 
-    protected static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass)
+    public static native <T extends MessageDefinition> T nativeRead(int readerHandle, Class<T> messageClass)
             throws DDSException;
 
-    protected static native <T extends MessageDefinition> T nativeTake(int readerOrConditionHandle,
+    public static native <T extends MessageDefinition> T nativeTake(int readerOrConditionHandle,
             Class<T> messageClass) throws DDSException;
 
-    protected static native void nativeAddOnDataAvailableCallback(int readerHandle,
+    public static native void nativeAddOnDataAvailableCallback(int readerHandle,
             OnDataAvailableCallbackInterface callback);
 
-    protected static native int nativeCreateWaitSetHandle(int domainParticipantHandle) throws DDSException;
+    public static native int nativeCreateWaitSetHandle(int domainParticipantHandle) throws DDSException;
 
-    protected static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle) throws DDSException;
+    public static native int nativeWaitSetAttach(int waitSetHandle, int entityHandle) throws DDSException;
 
-    protected static native int nativeWaitSetWait(int waitSetHandle, long timeout) throws DDSException;
+    public static native int nativeWaitSetWait(int waitSetHandle, long timeout) throws DDSException;
 
-    protected static native int nativeCreateReadCondition(int readerHandle, int mask) throws DDSException;
+    public static native int nativeCreateReadCondition(int readerHandle, int mask) throws DDSException;
 
-    protected static native long nativeCreateQosHandle();
+    public static native long nativeCreateQosHandle();
 
-    protected static native void nativeDeleteQosHandle(long handle);
+    public static native void nativeDeleteQosHandle(long handle);
 
-    protected static native long nativeSetQosReliability(long qosHandle, int kind, long maxBlockingTime);
+    public static native long nativeSetQosReliability(long qosHandle, int kind, long maxBlockingTime);
 
 
 }

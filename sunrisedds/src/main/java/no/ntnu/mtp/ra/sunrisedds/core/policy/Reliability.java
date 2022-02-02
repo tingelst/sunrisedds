@@ -1,11 +1,13 @@
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.core.policy;
+
+import no.ntnu.mtp.ra.sunrisedds.core.Duration;
 
 public class Reliability {
 
     private final Kind kind;
     private final Duration maxBlockingTime;
 
-    protected Reliability(final Kind kind, final Duration maxBlockingTime) {
+    public Reliability(final Kind kind, final Duration maxBlockingTime) {
         this.kind = kind;
         this.maxBlockingTime = maxBlockingTime;
     }

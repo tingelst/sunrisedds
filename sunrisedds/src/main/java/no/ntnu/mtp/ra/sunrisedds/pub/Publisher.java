@@ -11,28 +11,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds.examples;
-
-import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
-import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
-import no.ntnu.mtp.ra.sunrisedds.core.WaitSet;
-import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
+package no.ntnu.mtp.ra.sunrisedds.pub;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WaitSetExample {
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
-    private static final Logger logger = LoggerFactory.getLogger(WaitSetExample.class);
+public class Publisher extends Entity {
 
-    public static void main(String[] args) {
-        try {
-            DomainParticipant participant = SunriseDDS.createDomainParticipant();
-            WaitSet waitSet = participant.createWaitSet();
-            logger.info(String.valueOf(waitSet.getHandle()));
-        } catch (DDSException e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-        }
+    private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
+
+    public Publisher(final int handle) {
+        super(handle);
     }
+
+    public <T extends MessageDefinition> DataWriter<T> createDataWriter(Topic<T> topic) throws DDSException {
+        int dataWriterHandle = SunriseDDS.nativeCreateDataWriterHandle(this.getHandle(), topic.getHandle());
+        return new DataWriter<T>(dataWriterHandle, topic);
+    }
+
 }

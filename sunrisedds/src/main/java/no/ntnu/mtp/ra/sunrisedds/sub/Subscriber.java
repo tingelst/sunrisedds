@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.sub;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,13 +20,18 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
+import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class Subscriber extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
-    protected Subscriber(final int handle) {
+    public Subscriber(final int handle) {
         super(handle);
     }
 

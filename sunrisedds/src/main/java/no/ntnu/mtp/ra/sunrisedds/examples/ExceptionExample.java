@@ -13,9 +13,9 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds.examples;
 
-import no.ntnu.mtp.ra.sunrisedds.DDSException;
-import no.ntnu.mtp.ra.sunrisedds.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 
 public class ExceptionExample {
 

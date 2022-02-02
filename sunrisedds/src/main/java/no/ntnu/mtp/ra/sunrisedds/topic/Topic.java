@@ -11,25 +11,40 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+
+package no.ntnu.mtp.ra.sunrisedds.topic;
+
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+public class Topic<T extends MessageDefinition> {
 
-public class DataWriter<T extends MessageDefinition> extends Entity {
-  private static final Logger logger = LoggerFactory.getLogger(DataWriter.class);
+  private static final Logger logger = LoggerFactory.getLogger(Topic.class);
 
-  private Topic<T> topic;
+  private int handle;
 
-  protected DataWriter(final int handle, final Topic<T> topic) {
-    super(handle);
-    this.topic = topic;
+  private Class<T> messageType;
+
+  public final Class<T> getMessageType() {
+    return messageType;
   }
 
-  public void write(T message) throws DDSException {
-    SunriseDDS.nativeWrite(this.getHandle(), message);
+  private String topicName;
+
+  public final String getTopicName() {
+    return topicName;
+  }
+
+  public Topic(final int handle, final Class<T> messageType, final String topicName) {
+    this.handle = handle;
+    this.messageType = messageType;
+    this.topicName = topicName;
+  }
+
+  public final int getHandle() {
+    return this.handle;
   }
 
 }

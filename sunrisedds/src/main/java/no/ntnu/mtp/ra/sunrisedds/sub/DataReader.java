@@ -11,19 +11,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.sub;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
+import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber.DataState;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class DataReader<T extends MessageDefinition> extends Entity {
   private static final Logger logger = LoggerFactory.getLogger(DataReader.class);
 
   private Topic<T> topic;
-  
+
 
   protected DataReader(final int handle, final Topic<T> topic) {
     super(handle);

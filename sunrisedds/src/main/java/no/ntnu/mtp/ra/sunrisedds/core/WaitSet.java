@@ -11,24 +11,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 
-public class Publisher extends Entity {
+public class WaitSet extends Entity {
 
-    private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
+    private static final Logger logger = LoggerFactory.getLogger(WaitSet.class);
 
-    protected Publisher(final int handle) {
+    public WaitSet(final int handle) {
         super(handle);
     }
 
-    public <T extends MessageDefinition> DataWriter<T> createDataWriter(Topic<T> topic) throws DDSException {
-        int dataWriterHandle = SunriseDDS.nativeCreateDataWriterHandle(this.getHandle(), topic.getHandle());
-        return new DataWriter<T>(dataWriterHandle, topic);
+    public void attach(Entity entity) throws DDSException {
+        SunriseDDS.nativeWaitSetAttach(this.getHandle(), entity.getHandle());
+    }
+
+    public int waitForConditions(Duration reltimeout) throws DDSException {
+        return SunriseDDS.nativeWaitSetWait(this.getHandle(), reltimeout.getNanoseconds());
     }
 
 }

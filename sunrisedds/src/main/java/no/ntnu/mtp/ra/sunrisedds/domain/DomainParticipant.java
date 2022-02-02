@@ -11,18 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
+import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
+import no.ntnu.mtp.ra.sunrisedds.core.WaitSet;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
+import no.ntnu.mtp.ra.sunrisedds.pub.Publisher;
+import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber;
+import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class DomainParticipant extends Entity {
 
     private static final Logger logger = LoggerFactory.getLogger(DomainParticipant.class);
 
-    protected DomainParticipant(final int handle) {
+    public DomainParticipant(final int handle) {
         super(handle);
     }
 
@@ -42,7 +49,7 @@ public class DomainParticipant extends Entity {
     public <T extends MessageDefinition> Topic<T> createTopic(final Class<T> messageType, final String topicName)
             throws DDSException {
         int topicHandle = SunriseDDS.nativeCreateTopicHandle(this.getHandle(), messageType, topicName);
-        Topic<T> topic = new Topic<>(topicHandle, messageType, topicName);
+        Topic<T> topic = new Topic<T>(topicHandle, messageType, topicName);
         return topic;
     }
 

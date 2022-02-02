@@ -1,14 +1,16 @@
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.core.policy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 
 public class QosPolicy {
   private static final Logger logger = LoggerFactory.getLogger(QosPolicy.class);
 
     private long handle;
 
-    protected QosPolicy(final long handle) {
+    public QosPolicy(final long handle) {
         this.handle = handle;
     }
 

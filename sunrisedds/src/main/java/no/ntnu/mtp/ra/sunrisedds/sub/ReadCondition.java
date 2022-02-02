@@ -11,11 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds;
+package no.ntnu.mtp.ra.sunrisedds.sub;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 
 public class ReadCondition <T extends MessageDefinition> extends Entity {
