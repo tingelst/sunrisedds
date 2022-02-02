@@ -159,14 +159,13 @@ set_double_array_field(
   jclass array_list_class = env->FindClass("java/util/ArrayList");
   jmethodID array_list_constructor_mid = env->GetMethodID(array_list_class, "<init>", "()V");
   jmethodID array_list_add_mid = env->GetMethodID(array_list_class, "add", "(Ljava/lang/Object;)Z");
-  jobject array_list_object = env->NewObject(array_list_class, array_list_constructor_mid);
 
   jclass double_object_class = env->FindClass("java/lang/Double");
   jmethodID double_object_constructor_mid = env->GetMethodID(double_object_class, "<init>", "(D)V");
 
   jobject array_list = env->NewObject(array_list_class, array_list_constructor_mid);
   if (array_list != nullptr) {
-    for (int i = 0; i < field->_length; ++i) {
+    for (uint32_t i = 0; i < field->_length; ++i) {
       jobject double_object =
         env->NewObject(double_object_class, double_object_constructor_mid, field->_buffer[i]);
       if (double_object != nullptr) {
@@ -192,7 +191,7 @@ set_string_array_field(
 
   jobject array_list = env->NewObject(array_list_class, array_list_constructor_mid);
   if (array_list != nullptr) {
-    for (int i = 0; i < field->_length; ++i) {
+    for (uint32_t i = 0; i < field->_length; ++i) {
       jstring string_object = env->NewStringUTF(field->_buffer[i]);
       if (string_object != nullptr) {
         jboolean result = env->CallBooleanMethod(array_list, array_list_add_mid, string_object);

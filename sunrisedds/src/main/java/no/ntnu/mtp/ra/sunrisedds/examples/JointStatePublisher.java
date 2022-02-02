@@ -19,10 +19,11 @@ import org.slf4j.LoggerFactory;
 import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
-import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 import no.ntnu.mtp.ra.sunrisedds.pub.DataWriter;
 import no.ntnu.mtp.ra.sunrisedds.pub.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
+
+import sensor_msgs.msg.JointState;
 
 public class JointStatePublisher {
     private static final Logger logger = LoggerFactory.getLogger(JointStatePublisher.class);
