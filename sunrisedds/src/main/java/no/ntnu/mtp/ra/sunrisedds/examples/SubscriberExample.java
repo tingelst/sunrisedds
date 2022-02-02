@@ -22,13 +22,12 @@ import no.ntnu.mtp.ra.sunrisedds.core.Duration;
 import no.ntnu.mtp.ra.sunrisedds.core.WaitSet;
 import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
 import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
-import no.ntnu.mtp.ra.sunrisedds.msg.JointState;
 import no.ntnu.mtp.ra.sunrisedds.sub.DataReader;
 import no.ntnu.mtp.ra.sunrisedds.sub.ReadCondition;
-import no.ntnu.mtp.ra.sunrisedds.sub.SampleState;
 import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber.DataState;
 import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
+import sensor_msgs.msg.JointState;
 
 public class SubscriberExample {
 
