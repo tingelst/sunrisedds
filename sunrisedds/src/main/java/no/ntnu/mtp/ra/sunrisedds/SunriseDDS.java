@@ -24,7 +24,6 @@ import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
 import no.ntnu.mtp.ra.sunrisedds.core.policy.Reliability;
 import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
-import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class SunriseDDS {
@@ -82,9 +81,6 @@ public class SunriseDDS {
 
     public static native <T extends MessageDefinition> T nativeTake(int readerOrConditionHandle,
             Class<T> messageClass) throws DDSException;
-
-    public static native void nativeAddOnDataAvailableCallback(int readerHandle,
-            OnDataAvailableCallbackInterface callback);
 
     public static native int nativeCreateWaitSetHandle(int domainParticipantHandle) throws DDSException;
 

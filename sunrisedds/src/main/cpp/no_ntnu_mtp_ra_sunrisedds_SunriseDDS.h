@@ -81,14 +81,6 @@ JNIEXPORT jobject JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeTake
 
 /*
  * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
- * Method:    nativeAddOnDataAvailableCallback
- * Signature: (ILno/ntnu/mtp/ra/sunrisedds/msg/OnDataAvailableCallbackInterface;)V
- */
-JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeAddOnDataAvailableCallback
-  (JNIEnv *, jclass, jint, jobject);
-
-/*
- * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
  * Method:    nativeCreateWaitSetHandle
  * Signature: (I)I
  */

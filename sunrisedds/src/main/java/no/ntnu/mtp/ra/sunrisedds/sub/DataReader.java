@@ -20,8 +20,6 @@ import no.ntnu.mtp.ra.sunrisedds.SunriseDDS;
 import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.core.Entity;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
-import no.ntnu.mtp.ra.sunrisedds.msg.OnDataAvailableCallbackInterface;
-import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber.DataState;
 import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class DataReader<T extends MessageDefinition> extends Entity {
@@ -48,10 +46,6 @@ public class DataReader<T extends MessageDefinition> extends Entity {
   public ReadCondition<T> createReadCondition(Subscriber.DataState states) throws DDSException {
     int readConditionhandle = SunriseDDS.nativeCreateReadCondition(this.getHandle(), states.getValue());
     return new ReadCondition<T>(readConditionhandle, states.getValue());
-  }
-
-  public void addOnDataAvailableCallback(OnDataAvailableCallbackInterface callback) {
-    SunriseDDS.nativeAddOnDataAvailableCallback(this.getHandle(), callback);
   }
 
 }
