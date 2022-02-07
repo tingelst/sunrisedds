@@ -377,6 +377,22 @@ Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDeleteQosHandle(
 }
 
 JNIEXPORT jint JNICALL
+Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDelete(JNIEnv * env, jclass cls, jint jentity)
+{
+  (void)env;
+  (void)cls;
+
+  dds_entity_t entity = static_cast<dds_entity_t>(jentity);
+  dds_return_t ret = dds_delete(entity);
+  if (ret != DDS_RETCODE_OK) {
+    std::string error_message = std::string{"dds_delete: "} + std::string{dds_strretcode(-ret)};
+    return sunrisedds_throw_exception(env, error_message);
+  }
+  jint jret = static_cast<jint>(ret);
+  return jret;
+}
+
+JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM * vm, void *)
 {
   // Can only call this once

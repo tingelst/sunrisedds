@@ -8,7 +8,14 @@
         "/home/lars/devel/sunrisedds-build/jars/log4j-1.2.17.jar",
         "/home/lars/devel/sunrisedds-build/jars/slf4j-api-1.7.21.jar",
         "/home/lars/devel/sunrisedds-build/jars/slf4j-log4j12-1.7.21.jar",
-        "/home/lars/devel/sunrisedds-build/jars/slf4j-jdk14-1.7.21.jar"
+        "/home/lars/devel/sunrisedds-build/jars/slf4j-jdk14-1.7.21.jar",
+        "/home/lars/ws_sunrisedds/src/sunrisedds/build/jars/commons-lang3-3.7.jar",
+        "/home/lars/ws_sunrisedds/src/sunrisedds/build/jars/log4j-1.2.17.jar",
+        "/home/lars/ws_sunrisedds/src/sunrisedds/build/jars/slf4j-api-1.7.21.jar",
+        "/home/lars/ws_sunrisedds/src/sunrisedds/build/jars/slf4j-jdk14-1.7.21.jar"
     ],
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "header.h": "c"
+    }
 }

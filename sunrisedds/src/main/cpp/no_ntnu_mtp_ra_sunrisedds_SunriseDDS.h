@@ -135,6 +135,14 @@ JNIEXPORT void JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDeleteQos
 JNIEXPORT jlong JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeSetQosReliability
   (JNIEnv *, jclass, jlong, jint, jlong);
 
+/*
+ * Class:     no_ntnu_mtp_ra_sunrisedds_SunriseDDS
+ * Method:    nativeDelete
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_no_ntnu_mtp_ra_sunrisedds_SunriseDDS_nativeDelete
+  (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif

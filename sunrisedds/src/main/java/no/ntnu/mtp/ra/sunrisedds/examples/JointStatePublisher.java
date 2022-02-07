@@ -47,6 +47,8 @@ public class JointStatePublisher {
     public static void main(String[] args) {
         try {
 
+            SunriseDDS.init();
+
             String topicName = "rt/joint_states";
             JointStatePublisher jointStatePublisher = new JointStatePublisher(topicName);
 
@@ -85,6 +87,9 @@ public class JointStatePublisher {
             message.getEffort().add(6.0);
 
             jointStatePublisher.publish(message);
+
+            SunriseDDS.shutdown();
+
         } catch (DDSException e) {
             logger.error(e.getMessage());
             e.printStackTrace();

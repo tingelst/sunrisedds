@@ -13,6 +13,8 @@
 // limitations under the License.
 package no.ntnu.mtp.ra.sunrisedds;
 
+import java.util.Collection;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import no.ntnu.mtp.ra.sunrisedds.core.DDSException;
 import no.ntnu.mtp.ra.sunrisedds.core.Duration;
+import no.ntnu.mtp.ra.sunrisedds.core.Entity;
 import no.ntnu.mtp.ra.sunrisedds.core.policy.QosPolicy;
 import no.ntnu.mtp.ra.sunrisedds.core.policy.Reliability;
 import no.ntnu.mtp.ra.sunrisedds.domain.DomainParticipant;
@@ -30,6 +33,21 @@ public class SunriseDDS {
 
     private static final Logger logger = LoggerFactory.getLogger(SunriseDDS.class);
 
+    /**
+     * Private constructor so this cannot be instantiated.
+     */
+    private SunriseDDS() {
+
+    }
+
+    private static Collection<DomainParticipant> domainParticipants;
+
+    private static void cleanup() throws DDSException {
+        for (DomainParticipant domainParticipant : domainParticipants) {
+            SunriseDDS.delete(domainParticipant);
+        }
+    }
+
     static {
         try {
             JNIUtils.loadImplementation(SunriseDDS.class);
@@ -37,14 +55,26 @@ public class SunriseDDS {
             logger.error("Native code library failed to load.\n" + ule);
             System.exit(1);
         }
+
+        domainParticipants = new LinkedBlockingQueue<DomainParticipant>();
+
+    }
+
+    public static synchronized void init() {
+    }
+
+    public static synchronized void shutdown() throws DDSException {
+        cleanup();
     }
 
     public static DomainParticipant createDomainParticipant() throws DDSException {
         int handle = nativeCreateDomainParticipantHandle();
-        return new DomainParticipant(handle);
+        DomainParticipant domainParticipant = new DomainParticipant(handle);
+        domainParticipants.add(domainParticipant);
+        return domainParticipant;
     }
 
-    public static QosPolicy createQoSPolicy() {
+    public static QosPolicy createQoSPolicy() throws DDSException {
         long handle = SunriseDDS.nativeCreateQosHandle();
         return new QosPolicy(handle);
     }
@@ -55,6 +85,10 @@ public class SunriseDDS {
 
     public static Duration createDuration(long duration, TimeUnit unit) {
         return new Duration(duration, unit);
+    }
+
+    public static void delete(Entity entity) throws DDSException {
+        nativeDelete(entity.getHandle());
     }
 
     public static native int nativeCreateDomainParticipantHandle() throws DDSException;
@@ -90,10 +124,12 @@ public class SunriseDDS {
 
     public static native int nativeCreateReadCondition(int readerHandle, int mask) throws DDSException;
 
-    public static native long nativeCreateQosHandle();
+    public static native long nativeCreateQosHandle() throws DDSException;
 
     public static native void nativeDeleteQosHandle(long handle);
 
     public static native long nativeSetQosReliability(long qosHandle, int kind, long maxBlockingTime);
+
+    public static native int nativeDelete(int handle) throws DDSException;
 
 }
