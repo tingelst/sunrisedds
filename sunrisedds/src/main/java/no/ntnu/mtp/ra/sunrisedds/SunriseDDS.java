@@ -53,7 +53,6 @@ public class SunriseDDS {
             JNIUtils.loadImplementation(SunriseDDS.class);
         } catch (UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
-            System.exit(1);
         }
 
         domainParticipants = new LinkedBlockingQueue<DomainParticipant>();

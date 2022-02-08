@@ -34,10 +34,10 @@ public class JointState implements MessageDefinition {
     }
 
     private Header header = new Header();
-    private List<String> name = new ArrayList<>();
-    private List<Double> position = new ArrayList<>();
-    private List<Double> velocity = new ArrayList<>();
-    private List<Double> effort = new ArrayList<>();
+    private List<String> name = new ArrayList<String>();
+    private List<Double> position = new ArrayList<Double>();
+    private List<Double> velocity = new ArrayList<Double>();
+    private List<Double> effort = new ArrayList<Double>();
 
     
     public Header getHeader() {
