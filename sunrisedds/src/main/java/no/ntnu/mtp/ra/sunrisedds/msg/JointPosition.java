@@ -11,45 +11,44 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package builtin_interfaces.msg;
+package no.ntnu.mtp.ra.sunrisedds.msg;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
-public class Time implements MessageDefinition {
+public class JointPosition implements MessageDefinition {
 
-    private static final Logger logger = LoggerFactory.getLogger(Time.class);
+    private static final Logger logger = LoggerFactory.getLogger(JointPosition.class);
 
     static {
         try {
-            JNIUtils.loadImplementation(Time.class);
+            JNIUtils.loadImplementation(JointPosition.class);
         } catch (final UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
             System.exit(1);
         }
     }
 
-    int sec;
-    int nanosec;
+    Header header = new Header();
+    JointQuantity position = new JointQuantity();
 
-    public int getSec() {
-        return sec;
+    public Header getHeader() {
+        return header;
     }
 
-    public Time setSec(final int sec) {
-        this.sec = sec;
+    public JointPosition setHeader(Header header) {
+        this.header = header;
         return this;
     }
 
-    public int getNanosec() {
-        return nanosec;
+    public JointQuantity getPosition() {
+        return position;
     }
 
-    public Time setNanosec(final int nanosec) {
-        this.nanosec = nanosec;
+    public JointPosition setPosition(JointQuantity position) {
+        this.position = position;
         return this;
     }
 
@@ -63,22 +62,22 @@ public class Time implements MessageDefinition {
 
     @Override
     public long getFromJavaConverterInstance() {
-        return Time.getFromJavaConverter();
+        return JointPosition.getFromJavaConverter();
     }
 
     @Override
     public long getToJavaConverterInstance() {
-        return Time.getToJavaConverter();
+        return JointPosition.getToJavaConverter();
     }
 
     @Override
     public long getTopicDescriptorInstance() {
-        return Time.getTopicDescriptor();
+        return JointPosition.getTopicDescriptor();
     }
 
     @Override
     public long getDestructorInstance() {
-        return Time.getDestructor();
+        return JointPosition.getDestructor();
     }
 
 }

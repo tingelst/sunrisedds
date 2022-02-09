@@ -17,13 +17,13 @@ extern "C" {
 
 typedef struct sunrisedds_interfaces_msg_JointQuantity
 {
-  float a1;
-  float a2;
-  float a3;
-  float a4;
-  float a5;
-  float a6;
-  float a7;
+  double a1;
+  double a2;
+  double a3;
+  double a4;
+  double a5;
+  double a6;
+  double a7;
 } sunrisedds_interfaces_msg_JointQuantity;
 
 extern const dds_topic_descriptor_t sunrisedds_interfaces_msg_JointQuantity_desc;

@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "src/main/cpp",
+                "/usr/lib/jvm/java-1.17.0-openjdk-amd64/include/",
+                "/usr/lib/jvm/java-1.17.0-openjdk-amd64/include/linux",
+                "/home/lars/ws_sunrisedds/install/cyclonedds/include/"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
