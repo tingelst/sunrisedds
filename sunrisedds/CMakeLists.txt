@@ -12,22 +12,16 @@ if(NOT WIN32)
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(CMAKE_JAVA_COMPILE_FLAGS "-source" "1.6" "-target" "1.6")
+
 find_package(CycloneDDS REQUIRED)
 find_package(JNI REQUIRED)
 find_package(Java COMPONENTS Development REQUIRED)
 include(UseJava)
 
-set(SUNRISE_JAVA_VERSION "1.6.0.45")
-
-option(BUILD_JAR "Build JAR file" ON)
-if(BUILD_JAR) 
-
 set(${PROJECT_NAME}_exported_jars "")
-find_jar(COMMONS_LANG3_JAR NAMES commons-lang3 PATHS jars)
-
-if(${COMMONS_LANG3_JAR})
-  list(APPEND ${PROJECT_NAME}_exported_jars ${COMMONS_LANG3_JAR})
-else()
+find_jar(COMMONS_LANG3_JAR NAMES commons-lang3)
+if(NOT ${COMMONS_LANG3_JAR}) 
   set(commons_lang3_version "3.7")
   set(commons_lang3_sha256 "6e8dc31e046508d9953c96534edf0c2e0bfe6f468966b5b842b3f87e43b6a847")
   set(commons_lang3_url
@@ -40,14 +34,14 @@ else()
     DESTINATION
     "share/${PROJECT_NAME}/java")
 
-  set(COMMONS_LANG3_JAR "${commons_lang3_jar_path}")
+  find_jar(COMMONS_LANG3_JAR "commons-lang3" PATHS "${CMAKE_CURRENT_BINARY_DIR}/jars/" VERSIONS "${commons_lang3_version}")
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/commons-lang3-${commons_lang3_version}.jar")
+else()
+  list(APPEND ${PROJECT_NAME}_exported_jars ${COMMONS_LANG3_JAR})
 endif()
 
-find_jar(SFL4J_JAR NAMES slf4j-api PATHS jars)
-if(${SFL4J_JAR})
-  list(APPEND ${PROJECT_NAME}_exported_jars ${SFL4J_JAR})
-else()
+find_jar(SLF4J_JAR NAMES slf4j-api)
+if(NOT SLF4J_JAR)
   set(slf4j_version "1.7.21")
   set(slf4j_api_sha256 "1d5aeb6bd98b0fdd151269eae941c05f6468a791ea0f1e68d8e7fe518af3e7df")
   set(slf4j_api_url "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/${slf4j_version}/slf4j-api-${slf4j_version}.jar")
@@ -59,7 +53,8 @@ else()
     DESTINATION
     "share/${PROJECT_NAME}/java")
 
-  set(SFL4J_JAR "${slf4j_api_jar_path}")
+  find_jar(SLF4J_JAR "slf4j-api" PATHS "${CMAKE_CURRENT_BINARY_DIR}/jars/" VERSIONS ${slf4j_version})
+
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/slf4j-api-${slf4j_version}.jar")
 
   set(log4j_version "1.2.17")
@@ -93,7 +88,11 @@ else()
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/log4j-${log4j_version}.jar")
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/slf4j-log4j12-${slf4j_version}.jar")
   list(APPEND ${PROJECT_NAME}_exported_jars "share/${PROJECT_NAME}/java/slf4j-jdk14-${slf4j_version}.jar")
+else()
+  list(APPEND ${PROJECT_NAME}_exported_jars ${SFL4J_JAR})
 endif()
+
+message(STATUS ${SLF4J_JAR})
 
 set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/SunriseDDS.java"
@@ -152,11 +151,12 @@ add_jar("${PROJECT_NAME}_jar"
   OUTPUT_NAME
   ${PROJECT_NAME}
   INCLUDE_JARS
-  "${SFL4J_JAR}"
+  "${SLF4J_JAR}"
 )
 endif()
 
-endif(BUILD_JAR)
+install_jar("${PROJECT_NAME}_jar" "share/${PROJECT_NAME}/java")
+
 
 set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
@@ -215,6 +215,7 @@ foreach(_jni_source ${${PROJECT_NAME}_jni_sources})
   install(TARGETS ${_target_name}
     ARCHIVE DESTINATION lib/jni
     LIBRARY DESTINATION lib/jni
+    RUNTIME DESTINATION lib/jni
   )
 
 endforeach()
