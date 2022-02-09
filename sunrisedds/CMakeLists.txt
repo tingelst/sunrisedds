@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(sunrisedds)
+project(sunrisedds VERSION 0.0.1)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(string_camel_case_to_lower_case_underscore)
@@ -79,8 +79,9 @@ if(NOT SLF4J_JAR)
   list(APPEND logging_jars "${slf4j_jdk14_jar_path}")
 
   install(FILES
-    ${log4j_jar_path} ${slf4j_api_jar_path}
-    ${slf4j_log4j_jar_path} ${slf4j_android_jar_path}
+    ${log4j_jar_path} 
+    ${slf4j_api_jar_path}
+    ${slf4j_log4j_jar_path}
     ${slf4j_jdk14_jar_path}
     DESTINATION
     "share/${PROJECT_NAME}/java")
@@ -91,8 +92,6 @@ if(NOT SLF4J_JAR)
 else()
   list(APPEND ${PROJECT_NAME}_exported_jars ${SFL4J_JAR})
 endif()
-
-message(STATUS ${SLF4J_JAR})
 
 set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/SunriseDDS.java"
@@ -138,6 +137,8 @@ add_jar("${PROJECT_NAME}_jar"
   ${${PROJECT_NAME}_sources}
   OUTPUT_NAME
   ${PROJECT_NAME}
+  VERSION
+  ${CMAKE_PROJECT_VERSION}
   INCLUDE_JARS
   "${SFL4J_JAR}"
   GENERATE_NATIVE_HEADERS
@@ -150,13 +151,14 @@ add_jar("${PROJECT_NAME}_jar"
   ${${PROJECT_NAME}_sources}
   OUTPUT_NAME
   ${PROJECT_NAME}
+  VERSION
+  ${CMAKE_PROJECT_VERSION}
   INCLUDE_JARS
   "${SLF4J_JAR}"
 )
 endif()
 
 install_jar("${PROJECT_NAME}_jar" "share/${PROJECT_NAME}/java")
-
 
 set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/no_ntnu_mtp_ra_sunrisedds_SunriseDDS.cpp"
@@ -212,10 +214,11 @@ foreach(_jni_source ${${PROJECT_NAME}_jni_sources})
     CycloneDDS::ddsc
   )
 
-  install(TARGETS ${_target_name}
+  install(
+    TARGETS ${_target_name}
     ARCHIVE DESTINATION lib/jni
     LIBRARY DESTINATION lib/jni
-    RUNTIME DESTINATION lib/jni
+    RUNTIME DESTINATION bin/jni
   )
 
 endforeach()
