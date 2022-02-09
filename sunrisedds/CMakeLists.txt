@@ -120,15 +120,11 @@ set(${PROJECT_NAME}_sources
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/utils/JNIUtils.java"
 
   "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/MessageDefinition.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Time.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/Header.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointQuantity.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointPosition.java"
-  "src/main/java/no/ntnu/mtp/ra/sunrisedds/msg/JointState.java"
-
   "src/main/java/std_msgs/msg/Header.java"
   "src/main/java/sensor_msgs/msg/JointState.java"
   "src/main/java/builtin_interfaces/msg/Time.java"
+  "src/main/java/sunrisedds_interfaces/msg/JointQuantity.java"
+  "src/main/java/sunrisedds_interfaces/msg/JointPosition.java"
 )
 
 option(GENERATE_NATIVE_HEADERS "Generate native headers" OFF)
@@ -171,6 +167,8 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/builtin_interfaces_msg_Time.cpp"
   "src/main/cpp/sensor_msgs_msg_JointState.cpp"
   "src/main/cpp/std_msgs_msg_Header.cpp"
+  "src/main/cpp/sunrisedds_interfaces_msg_JointQuantity.cpp"
+  "src/main/cpp/sunrisedds_interfaces_msg_JointPosition.cpp"
 )
 
 set("${PROJECT_NAME}_msg_sources"

@@ -35,6 +35,16 @@ public class Subscriber extends Entity {
         super(handle);
     }
 
+    public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic)
+            throws DDSException {
+        QosPolicy qos = SunriseDDS.createQoSPolicy();
+        qos.setReliability(SunriseDDS.createReliability());
+        int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle(),
+                qos.getHandle());
+        qos.dispose();
+        return new DataReader<T>(dataReaderHandle, topic);
+    }
+
     public <T extends MessageDefinition> DataReader<T> createDataReader(Topic<T> topic, QosPolicy qos)
             throws DDSException {
         int dataReaderHandle = SunriseDDS.nativeCreateDataReaderHandle(this.getHandle(), topic.getHandle(),

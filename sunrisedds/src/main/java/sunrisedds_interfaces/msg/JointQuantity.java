@@ -11,11 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package no.ntnu.mtp.ra.sunrisedds.msg;
+package sunrisedds_interfaces.msg;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
 public class JointQuantity implements MessageDefinition {
@@ -27,7 +28,6 @@ public class JointQuantity implements MessageDefinition {
             JNIUtils.loadImplementation(JointQuantity.class);
         } catch (final UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
-            System.exit(1);
         }
     }
 
