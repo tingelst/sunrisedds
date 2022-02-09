@@ -2,21 +2,19 @@
 CycloneDDS on KUKA Sunrise.OS for integration with ROS2
 
 
-### Build CycloneDDS on Windows 7 32 Bit
+### Build CycloneDDS for Windows 7 32 Bit
 
-1. Download and start a Windows 7 32 bit VM (e.g. VirtualBox) from: https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/. The following steps should be performed in the VM.
+1. Download and install Visual Studio 2019 Community Edition from: https://visualstudio.microsoft.com. Select 'Desktop development with C++'.
 
-2. Download and install Visual Studio 2019 Community Edition from: https://visualstudio.microsoft.com. Select 'Desktop development with C++'.
+2. Download and install the latest CMake release from: https://cmake.org/download.
 
-3. Download and install the latest CMake release from: https://cmake.org/download. Select 'Windows i386 Installer'.
+3. Download and unzip the latest winflexbison release from: https://github.com/lexxmark/winflexbison/releases. Tested with version 2.5.24 (bison 3.7.4,, flex 2.6.4).
 
-4. Download and unzip the latest winflexbison release from: https://github.com/lexxmark/winflexbison/releases. Tested with version 2.5.24 (bison 3.7.4,, flex 2.6.4).
+4. Download and unzip Eclipse Cyclone DDS from: https://github.com/eclipse-cyclonedds/cyclonedds/archive/refs/heads/master.zip. 
 
-5. Download and unzip Eclipse Cyclone DDS from: https://github.com/eclipse-cyclonedds/cyclonedds/archive/refs/heads/master.zip. 
+5. Open CMake and configure Cyclone DDS: Select the advanced option, set `BISON_EXECUTABLE` to the `win_bison.exe` in the unzipped winflexbison folder, and disable the use of OpenSSL by unselecting `ENABLE_SSL `. Press `Configure`, `Generate`. Open the generated Visual Studio project by pressing `Open Project`.
 
-6. Open CMake and configure Cyclone DDS: Select the advanced option, set `BISON_EXECUTABLE` to the `win_bison.exe` in the unzipped winflexbison folder, and disable the use of OpenSSL by unselecting `ENABLE_SSL `. Press `Configure`, `Generate`. Open the generated Visual Studio project by pressing `Open Project`.
-
-7. In Visual Studio 2019, open the file: `src/ddsrt/src/time/windows/time.c` and add the following preprocessor definitions
+6. In Visual Studio 2019, open the file: `src/ddsrt/src/time/windows/time.c` and add the following preprocessor definitions
     ```c++
     #if defined(_WIN32_WINNT) && _WIN32_WINNT != 0x0601
     #undef _WIN32_WINNT
@@ -38,30 +36,19 @@ CycloneDDS on KUKA Sunrise.OS for integration with ROS2
     ```
     This is to enable a Windows 7 build as Visual Studio 2019 by default targets Windows 10.
 
-8. Build the solution (ALL_BUILD ). Ensure that the configuration is set to Release and that the platform is set to Win32.
+8. Build the solution (ALL_BUILD). Ensure that the configuration is set to `Release` and that the platform is set to `Win32`.
 
 9. Install the solution (INSTALL). The default install directory is `C:\Program Files\CycloneDDS`.
 
 ### Install Sunrise Workbench
 
-Install Sunrise Workbench in the Windows 7 virtual machine. The installer comes with the installation medium from KUKA.
+Install Sunrise Workbench. The installer comes with the installation medium from KUKA.
 
 ### Configure environment variables
 
 1. Define the `JAVA_HOME` environment variable to the Sunrise Workbench jdk folder. Default location: `C:\Program Files\KUKA\Sunrise Workbench\jdk`.
 
 2. Append `%JAVA_HOME%\bin` to the `Path` environment variable.
-
-
-### Build Sunrise DDS jar and jni library
-
-1. Configure, generate, and build the SunriseDDS library to produce `sunrisedds.jar` and `sunrisedds_jni.dll`. 
-
-2. Add `sunrisedds.jar` to the build path in Sunrise Workbench.
-
-3. Copy `sunrisedds_jni.dll` to the Sunrise Controller at `C:\KRC\Shared`. This folder is by default in the `Path` environment variable on the controller.
-
-4. Copy Cyclone DDS to the robot controller.
 
 
 
