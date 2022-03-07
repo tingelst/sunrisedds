@@ -1,5 +1,6 @@
 package no.ntnu.mtp.ra.sunrisedds.servoing;
 
+import java.util.EnumMap;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.BasicConfigurator;
@@ -30,7 +31,16 @@ import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
 
 public class Ros2RobotApplication extends RoboticsAPIApplication {
 
+	public enum RobotMode {
+		UNKNOWN, NORMAL, SMART_SERVO, DIRECT_SERVO
+	};
+
+	RobotMode lastRobotMode = RobotMode.UNKNOWN;
+
 	private LBR robot = null;
+
+	private IMotionContainer motionContainer = null;
+
 	private Tool tool = null;
 
 	private SmartServo motion = null;
@@ -42,12 +52,11 @@ public class Ros2RobotApplication extends RoboticsAPIApplication {
 	private boolean running = true;
 	private boolean initialized = false;
 
-	double minTrajectoryExecutionTime = 1e-3; 
+	double minTrajectoryExecutionTime = 1e-3;
 	double timeoutAfterGoalReach = 3600; // Timeout after 1 hour
 	double normalizedVelocityRelativeToMax = 0.2; // 20 % of max velocity
 	double normalizedAccelerationRelativeToMax = 0.2; // 20 % of max acceleration
-    long cycleTimeInMilliseconds = 10; // 100 Hz
-
+	long cycleTimeInMilliseconds = 10; // 100 Hz
 
 	private DomainParticipant domainParticipant = null;
 	private Publisher publisher = null;
@@ -118,9 +127,9 @@ public class Ros2RobotApplication extends RoboticsAPIApplication {
 			motion.setMinimumTrajectoryExecutionTime(minTrajectoryExecutionTime);
 
 			tool.getDefaultMotionFrame().moveAsync(motion);
-			
+
 			runtime = motion.getRuntime();
-			
+
 			while (running) {
 
 				if (runtime.updateWithRealtimeSystem() == -1) {
@@ -157,7 +166,7 @@ public class Ros2RobotApplication extends RoboticsAPIApplication {
 					}
 
 				}
-				
+
 				ThreadUtil.milliSleep(cycleTimeInMilliseconds);
 			}
 
@@ -167,7 +176,7 @@ public class Ros2RobotApplication extends RoboticsAPIApplication {
 			e.printStackTrace();
 
 		}
-		
+
 		finally {
 			getLogger().info("The control loop has ended. The application will be terminated");
 		}
@@ -191,8 +200,7 @@ public class Ros2RobotApplication extends RoboticsAPIApplication {
 		}
 		super.onApplicationStateChanged(state);
 	}
-	
-	
+
 	public static void main(String[] args) {
 		Ros2RobotApplication app = new Ros2RobotApplication();
 		app.runApplication();
