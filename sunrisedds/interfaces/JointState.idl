@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Header.idl"
 
 module sensor_msgs {

@@ -20,34 +20,31 @@ import geometry_msgs.msg.Pose;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
-public class SmartServo implements MessageDefinition {
+public class DirectServo implements MessageDefinition {
 
-    private static final Logger logger = LoggerFactory.getLogger(SmartServo.class);
+    private static final Logger logger = LoggerFactory.getLogger(DirectServo.class);
 
     static {
         try {
-            JNIUtils.loadImplementation(SmartServo.class);
+            JNIUtils.loadImplementation(DirectServo.class);
         } catch (final UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
         }
     }
 
-    public static final int SMART_SERVO_JOINT_POSITION = 0;
-    public static final int SMART_SERVO_JOINT_POSITION_VELOCITY = 1;
-    public static final int SMART_SERVO_CARTESIAN_POSE = 2;
+    public static final int DIRECT_SERVO_JOINT_POSITION = 0;
+    public static final int DIRECT_SERVO_CARTESIAN_POSE = 1;
 
-    private int type = SmartServo.SMART_SERVO_JOINT_POSITION;
+    private int type = 0;
     private JointQuantity jointPosition = new JointQuantity();
-    private JointQuantity jointVelocity = new JointQuantity();
     private Pose cartesianPose = new Pose();
     private JointQuantity jointVelocityRel = new JointQuantity();
-    private JointQuantity jointAccelerationRel = new JointQuantity();
 
     public int getType() {
         return type;
     }
 
-    public SmartServo setType(int type) {
+    public DirectServo setType(int type) {
         this.type = type;
         return this;
     }
@@ -56,17 +53,8 @@ public class SmartServo implements MessageDefinition {
         return jointPosition;
     }
 
-    public SmartServo setJointPosition(JointQuantity jointPosition) {
+    public DirectServo setJointPosition(JointQuantity jointPosition) {
         this.jointPosition = jointPosition;
-        return this;
-    }
-
-    public JointQuantity getJointVelocity() {
-        return jointVelocity;
-    }
-
-    public SmartServo setJointVelocity(JointQuantity jointVelocity) {
-        this.jointVelocity = jointVelocity;
         return this;
     }
 
@@ -74,7 +62,7 @@ public class SmartServo implements MessageDefinition {
         return cartesianPose;
     }
 
-    public SmartServo setCartesianPose(Pose cartesianPose) {
+    public DirectServo setCartesianPose(Pose cartesianPose) {
         this.cartesianPose = cartesianPose;
         return this;
     }
@@ -83,19 +71,11 @@ public class SmartServo implements MessageDefinition {
         return jointVelocityRel;
     }
 
-    public SmartServo setJointVelocityRel(JointQuantity jointVelocityRel) {
+    public DirectServo setJointVelocityRel(JointQuantity jointVelocityRel) {
         this.jointVelocityRel = jointVelocityRel;
         return this;
     }
 
-    public JointQuantity getJointAccelerationRel() {
-        return jointAccelerationRel;
-    }
-
-    public SmartServo setJointAccelerationRel(JointQuantity jointAccelerationRel) {
-        this.jointAccelerationRel = jointAccelerationRel;
-        return this;
-    }
 
     public static native long getFromJavaConverter();
 
@@ -107,22 +87,22 @@ public class SmartServo implements MessageDefinition {
 
     @Override
     public long getFromJavaConverterInstance() {
-        return SmartServo.getFromJavaConverter();
+        return DirectServo.getFromJavaConverter();
     }
 
     @Override
     public long getToJavaConverterInstance() {
-        return SmartServo.getToJavaConverter();
+        return DirectServo.getToJavaConverter();
     }
 
     @Override
     public long getTopicDescriptorInstance() {
-        return SmartServo.getTopicDescriptor();
+        return DirectServo.getTopicDescriptor();
     }
 
     @Override
     public long getDestructorInstance() {
-        return SmartServo.getDestructor();
+        return DirectServo.getDestructor();
     }
 
 }

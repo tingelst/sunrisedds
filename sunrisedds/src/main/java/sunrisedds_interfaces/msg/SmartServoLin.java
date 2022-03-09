@@ -17,56 +17,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import geometry_msgs.msg.Pose;
+import geometry_msgs.msg.Vector3;
 import no.ntnu.mtp.ra.sunrisedds.msg.MessageDefinition;
 import no.ntnu.mtp.ra.sunrisedds.utils.JNIUtils;
 
-public class SmartServo implements MessageDefinition {
+public class SmartServoLin implements MessageDefinition {
 
-    private static final Logger logger = LoggerFactory.getLogger(SmartServo.class);
+    private static final Logger logger = LoggerFactory.getLogger(SmartServoLin.class);
 
     static {
         try {
-            JNIUtils.loadImplementation(SmartServo.class);
+            JNIUtils.loadImplementation(SmartServoLin.class);
         } catch (final UnsatisfiedLinkError ule) {
             logger.error("Native code library failed to load.\n" + ule);
         }
     }
 
-    public static final int SMART_SERVO_JOINT_POSITION = 0;
-    public static final int SMART_SERVO_JOINT_POSITION_VELOCITY = 1;
-    public static final int SMART_SERVO_CARTESIAN_POSE = 2;
+    public static final int SMART_SERVO_LIN_CARTESIAN_POSE = 0;
+    public static final int SMART_SERVO_LIN_CARTESIAN_POSE_VELOCITY = 1;
 
-    private int type = SmartServo.SMART_SERVO_JOINT_POSITION;
-    private JointQuantity jointPosition = new JointQuantity();
-    private JointQuantity jointVelocity = new JointQuantity();
+    private int type = SmartServoLin.SMART_SERVO_LIN_CARTESIAN_POSE;
     private Pose cartesianPose = new Pose();
-    private JointQuantity jointVelocityRel = new JointQuantity();
-    private JointQuantity jointAccelerationRel = new JointQuantity();
+    private Vector3 translationalVelocity = new Vector3();
 
     public int getType() {
         return type;
     }
 
-    public SmartServo setType(int type) {
+    public SmartServoLin setType(int type) {
         this.type = type;
-        return this;
-    }
-
-    public JointQuantity getJointPosition() {
-        return jointPosition;
-    }
-
-    public SmartServo setJointPosition(JointQuantity jointPosition) {
-        this.jointPosition = jointPosition;
-        return this;
-    }
-
-    public JointQuantity getJointVelocity() {
-        return jointVelocity;
-    }
-
-    public SmartServo setJointVelocity(JointQuantity jointVelocity) {
-        this.jointVelocity = jointVelocity;
         return this;
     }
 
@@ -74,26 +53,17 @@ public class SmartServo implements MessageDefinition {
         return cartesianPose;
     }
 
-    public SmartServo setCartesianPose(Pose cartesianPose) {
+    public SmartServoLin setCartesianPose(Pose cartesianPose) {
         this.cartesianPose = cartesianPose;
         return this;
     }
 
-    public JointQuantity getJointVelocityRel() {
-        return jointVelocityRel;
+    public Vector3 getTranslationalVelocity() {
+        return translationalVelocity;
     }
 
-    public SmartServo setJointVelocityRel(JointQuantity jointVelocityRel) {
-        this.jointVelocityRel = jointVelocityRel;
-        return this;
-    }
-
-    public JointQuantity getJointAccelerationRel() {
-        return jointAccelerationRel;
-    }
-
-    public SmartServo setJointAccelerationRel(JointQuantity jointAccelerationRel) {
-        this.jointAccelerationRel = jointAccelerationRel;
+    public SmartServoLin setTranslationalVelocity(Vector3 translationalVelocity) {
+        this.translationalVelocity = translationalVelocity;
         return this;
     }
 

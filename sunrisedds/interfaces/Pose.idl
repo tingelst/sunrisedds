@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Point.idl"
 #include "Quaternion.idl"
 

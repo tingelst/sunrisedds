@@ -1,11 +1,9 @@
-// generated from rosidl_adapter/resource/msg.idl.em
-// with input from sunrisedds_interfaces/msg/ServoCommand.msg
-// generated code does not contain a copyright notice
+#pragma once 
 
-#include "std_msgs/msg/Header.idl"
-#include "sunrisedds_interfaces/msg/DirectServo.idl"
-#include "sunrisedds_interfaces/msg/SmartServo.idl"
-#include "sunrisedds_interfaces/msg/SmartServoLin.idl"
+#include "Header.idl"
+#include "DirectServo.idl"
+#include "SmartServo.idl"
+#include "SmartServoLin.idl"
 
 module sunrisedds_interfaces {
   module msg {

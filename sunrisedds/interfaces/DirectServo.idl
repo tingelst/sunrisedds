@@ -1,9 +1,7 @@
-// generated from rosidl_adapter/resource/msg.idl.em
-// with input from sunrisedds_interfaces/msg/DirectServo.msg
-// generated code does not contain a copyright notice
+#pragma once 
 
-#include "geometry_msgs/msg/Pose.idl"
-#include "sunrisedds_interfaces/msg/JointQuantity.idl"
+#include "Pose.idl"
+#include "JointQuantity.idl"
 
 module sunrisedds_interfaces {
   module msg {
