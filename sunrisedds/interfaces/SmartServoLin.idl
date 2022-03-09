@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from sunrisedds_interfaces/msg/SmartServoLin.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+#include "geometry_msgs/msg/Vector3.idl"
+
+module sunrisedds_interfaces {
+  module msg {
+    module SmartServoLin_Constants {
+      const uint8 SMART_SERVO_LIN_CARTESIAN_POSE = 0;
+      const uint8 SMART_SERVO_LIN_CARTESIAN_POSE_VELOCITY = 1;
+    };
+    struct SmartServoLin {
+      geometry_msgs::msg::Pose cartesian_pose;
+
+      geometry_msgs::msg::Vector3 translational_velocity;
+    };
+  };
+};

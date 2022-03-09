@@ -4,7 +4,9 @@
         "build/jars/commons-lang3-3.7.jar",
         "build/jars/log4j-1.2.17.jar",
         "build/jars/slf4j-api-1.7.21.jar",
-        "build/jars/slf4j-jdk14-1.7.21.jar"
+        "build/jars/slf4j-jdk14-1.7.21.jar",
+        "/home/lars/sunrisedds_ws/jars/slf4j-api-1.7.21.jar",
+        "/home/lars/sunrisedds_ws/jars/slf4j-simple-1.7.21.jar"
     ],
     "files.associations": {
         "jointquantity.h": "c",
@@ -77,5 +79,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "dds_public_impl.h": "c"
-    }
+    },
+    "java.project.sourcePaths": [
+        "sunrisedds/src/main/java"
+    ]
 }

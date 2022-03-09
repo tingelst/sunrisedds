@@ -1,0 +1,29 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from sunrisedds_interfaces/msg/ServoCommand.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+#include "sunrisedds_interfaces/msg/DirectServo.idl"
+#include "sunrisedds_interfaces/msg/SmartServo.idl"
+#include "sunrisedds_interfaces/msg/SmartServoLin.idl"
+
+module sunrisedds_interfaces {
+  module msg {
+    module ServoCommand_Constants {
+      const uint8 SMART_SERVO = 0;
+      const uint8 DIRECT_SERVO = 1;
+      const uint8 SMART_SERVO_LIN = 2;
+    };
+    struct ServoCommand {
+      std_msgs::msg::Header header;
+
+      uint8 type;
+
+      sunrisedds_interfaces::msg::SmartServo smart_servo;
+
+      sunrisedds_interfaces::msg::DirectServo direct_servo;
+
+      sunrisedds_interfaces::msg::SmartServoLin smart_servo_lin;
+    };
+  };
+};

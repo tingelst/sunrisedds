@@ -125,6 +125,8 @@ set(${PROJECT_NAME}_sources
   "src/main/java/builtin_interfaces/msg/Time.java"
   "src/main/java/sunrisedds_interfaces/msg/JointQuantity.java"
   "src/main/java/sunrisedds_interfaces/msg/JointPosition.java"
+
+  "src/main/java/geometry_msgs/msg/Vector3.java"
 )
 
 option(GENERATE_NATIVE_HEADERS "Generate native headers" OFF)
@@ -169,6 +171,8 @@ set(${PROJECT_NAME}_jni_sources
   "src/main/cpp/std_msgs_msg_Header.cpp"
   "src/main/cpp/sunrisedds_interfaces_msg_JointQuantity.cpp"
   "src/main/cpp/sunrisedds_interfaces_msg_JointPosition.cpp"
+  "src/main/cpp/geometry_msgs_msg_Vector3.cpp"
+
 )
 
 set("${PROJECT_NAME}_msg_sources"
@@ -177,6 +181,7 @@ set("${PROJECT_NAME}_msg_sources"
   "src/main/cpp/JointQuantity.c"
   "src/main/cpp/JointPosition.c"
   "src/main/cpp/JointState.c"
+  "src/main/cpp/Vector3.c"
 
 )
 

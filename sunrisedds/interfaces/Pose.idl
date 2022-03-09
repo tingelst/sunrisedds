@@ -1,0 +1,14 @@
+#include "Point.idl"
+#include "Quaternion.idl"
+
+module geometry_msgs {
+  module msg {
+    @verbatim (language="comment", text=
+      " A representation of pose in free space, composed of position and orientation.")
+    struct Pose {
+      geometry_msgs::msg::Point position;
+
+      geometry_msgs::msg::Quaternion orientation;
+    };
+  };
+};

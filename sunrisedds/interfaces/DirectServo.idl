@@ -1,0 +1,26 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from sunrisedds_interfaces/msg/DirectServo.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+#include "sunrisedds_interfaces/msg/JointQuantity.idl"
+
+module sunrisedds_interfaces {
+  module msg {
+    module DirectServo_Constants {
+      const uint8 DIRECT_SERVO_JOINT_POSITION = 0;
+      const uint8 DIRECT_SERVO_CARTESIAN_POSE = 1;
+    };
+    struct DirectServo {
+      uint8 type;
+
+      sunrisedds_interfaces::msg::JointQuantity joint_position;
+
+      geometry_msgs::msg::Pose cartesian_pose;
+
+      @verbatim (language="comment", text=
+        " Maximum value of the axis velocity in the machine data")
+      sunrisedds_interfaces::msg::JointQuantity joint_velocity_rel;
+    };
+  };
+};
