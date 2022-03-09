@@ -26,6 +26,7 @@ import no.ntnu.mtp.ra.sunrisedds.pub.Publisher;
 import no.ntnu.mtp.ra.sunrisedds.sub.DataReader;
 import no.ntnu.mtp.ra.sunrisedds.sub.Subscriber;
 import no.ntnu.mtp.ra.sunrisedds.topic.Topic;
+import sunrisedds_interfaces.msg.DirectServo;
 import sunrisedds_interfaces.msg.ServoCommand;
 
 public class ServoCommandPubSub {
@@ -53,7 +54,23 @@ public class ServoCommandPubSub {
             ServoCommand message = new ServoCommand();
 
             message.setType(ServoCommand.DIRECT_SERVO);
-
+            message.getDirectServo().setType(DirectServo.DIRECT_SERVO_JOINT_POSITION);
+            message.getDirectServo().getJointPosition()
+                    .setA1(1.0)
+                    .setA2(1.0)
+                    .setA3(1.0)
+                    .setA4(1.0)
+                    .setA5(1.0)
+                    .setA6(1.0)
+                    .setA7(1.0);
+            message.getDirectServo().getJointVelocityRel()
+                    .setA1(1.0)
+                    .setA2(1.0)
+                    .setA3(1.0)
+                    .setA4(1.0)
+                    .setA5(1.0)
+                    .setA6(1.0)
+                    .setA7(1.0);
 
             writer.write(message);
             logger.info("Wrote message");
